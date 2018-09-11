@@ -138,7 +138,7 @@ const StandardUserInterface = createReactClass({
 
                 <If condition={!this.props.viewState.hideMapUi()}>
                     <div className = {classNames({[Styles.explorerPanelIsVisible]: this.props.viewState.explorerPanelIsVisible})}>
-                        <MenuBar terria={terria}
+                       <MenuBar terria={terria}
                                  viewState={this.props.viewState}
                                  allBaseMaps={allBaseMaps}
                                  menuItems={customElements.menu}

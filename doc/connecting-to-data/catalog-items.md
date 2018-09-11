@@ -10,6 +10,7 @@ A Catalog Item is a dataset or service that can be enabled for display on the ma
 | [CKAN Resource](catalog-type-details/ckan-resource.md) | `ckan-resource` |
 | [Composite](catalog-type-details/composite.md) | `composite` |
 | [Comma-Separated Values (CSV)](catalog-type-details/csv.md) | `csv` |
+| [Objects Comma-Separated Values (CSV)](catalog-type-details/object-csv.md) | `object-csv` |
 | [Format Conversion Service (based on OGR)](catalog-type-details/ogr.md) | `ogr` |
 | [GeoJSON](catalog-type-details/geojson.md) | `geojson` |
 | [GPX](catalog-type-details/gpx.md) | `gpx` |
