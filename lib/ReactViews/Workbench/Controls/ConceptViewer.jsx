@@ -22,6 +22,7 @@ const ConceptViewer = createReactClass({
         // All non-additive-conditions go in a single section. (If there are none, don't show a <div class=section> so we don't get an extra padding.)
         // Each additive-condition goes in its own section.
         const nonSummaryConcept = this.props.item.concepts.filter(concept => concept.isVisible && !SummaryConceptModel.prototype.isPrototypeOf(concept));
+        
         return (
             <div className={Styles.root}>
                 <If condition={nonSummaryConcept.length > 0}>

@@ -57,6 +57,62 @@ const WorkbenchItem = createReactClass({
 
     render() {
         const workbenchItem = this.props.item;
+
+
+        //Edited: disables the usual information for data and enable cultural heritage object oriented information
+        console.log(workbenchItem);
+        if(workbenchItem.type == 'object-csv')
+        return (
+            <li
+                style={this.props.style}
+                className={classNames(this.props.className, Styles.workbenchItem,{[Styles.isOpen]: workbenchItem.isLegendVisible})}>
+                <ul className={Styles.header}>
+                    <If condition={workbenchItem.supportsToggleShown}>
+                        <li className={Styles.visibilityColumn}>
+                            <button type='button'
+                                    onClick={this.toggleVisibility}
+                                    title="Data show/hide"
+                                    className={Styles.btnVisibility}>
+                                {workbenchItem.isShown ? <Icon glyph={Icon.GLYPHS.checkboxOn}/> : <Icon glyph={Icon.GLYPHS.checkboxOff}/>}
+                            </button>
+                        </li>
+                    </If>
+                    <li className={Styles.nameColumn}>
+                        <div
+                            onMouseDown={this.props.onMouseDown}
+                            onTouchStart={this.props.onTouchStart}
+                            className={Styles.draggable}
+                            title={getAncestors(workbenchItem).map(member => member.nameInCatalog).concat(workbenchItem.nameInCatalog).join(' → ')}>
+                            <If condition={!workbenchItem.isMappable}>
+                                <span className={Styles.iconLineChart}><Icon glyph={Icon.GLYPHS.lineChart}/></span>
+                            </If>
+                            {workbenchItem.name}
+                        </div>
+                    </li>
+                    <li className={Styles.toggleColumn}>
+                        <button type='button'
+                                className={Styles.btnToggle}
+                                onClick={this.toggleDisplay}>
+                            {workbenchItem.isLegendVisible ? <Icon glyph={Icon.GLYPHS.opened}/> : <Icon glyph={Icon.GLYPHS.closed}/>}
+                        </button>
+                    </li>
+                    <li className={Styles.headerClearfix} />
+                </ul>
+
+                <If condition={workbenchItem.isLegendVisible}>
+
+                    <div className={Styles.inner}>
+                        <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
+                        <p>Creation time: {workbenchItem.time}</p>
+                        <Legend item={workbenchItem}/>
+                        <If condition={(defined(workbenchItem.concepts) && workbenchItem.concepts.length > 0) && workbenchItem.displayChoicesBeforeLegend}>
+                            <ConceptViewer item={workbenchItem}/>
+                        </If>
+                    </div>
+                </If>
+            </li>
+        );
+
         return (
             <li
                 style={this.props.style}
@@ -95,6 +151,7 @@ const WorkbenchItem = createReactClass({
                 </ul>
 
                 <If condition={workbenchItem.isLegendVisible}>
+
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
                         <OpacitySection item={workbenchItem}/>
