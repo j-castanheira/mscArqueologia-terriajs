@@ -160,6 +160,7 @@ describe('TableStructure', function() {
         }};
         var tableStructure = new TableStructure('foo', options);
         tableStructure = tableStructure.loadFromJson(data);
+        console.log("its here");
         var rowObjects = tableStructure.toStringAndNumberRowObjects();
         expect(rowObjects.length).toEqual(3);
         expect(rowObjects[0]).toEqual({string: {x: '2', newy: '-9' + decimalPoint + '9'}, number: {x: 1.678, newy: -9.883}});
