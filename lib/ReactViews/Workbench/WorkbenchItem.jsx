@@ -14,6 +14,7 @@ import DimensionSelectorSection from './Controls/DimensionSelectorSection';
 import DisplayAsPercentSection from './Controls/DisplayAsPercentSection';
 import getAncestors from '../../Models/getAncestors';
 import LeftRightSection from './Controls/LeftRightSection';
+import ObjectList from './Controls/ObjectList';
 import Legend from './Controls/Legend';
 import ObserveModelMixin from './../ObserveModelMixin';
 import OpacitySection from './Controls/OpacitySection';
@@ -60,7 +61,7 @@ const WorkbenchItem = createReactClass({
 
 
         //Edited: disables the usual information for data and enable cultural heritage object oriented information
-        console.log(workbenchItem);
+        //console.log(workbenchItem);
         if(workbenchItem.type == 'object-csv')
         return (
             <li
@@ -103,11 +104,11 @@ const WorkbenchItem = createReactClass({
 
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
-                        <p>Creation time: {workbenchItem.time}</p> Tua mãe 3
-                        <Legend item={workbenchItem}/>
-                        <If condition={(defined(workbenchItem.concepts) && workbenchItem.concepts.length > 0) && workbenchItem.displayChoicesBeforeLegend}>
-                            <ConceptViewer item={workbenchItem}/>
-                        </If>
+                        <ObjectList item={workbenchItem}/>
+                        <div>
+                            Creation time: {workbenchItem.time}
+                            Results: {workbenchItem.results}
+                        </div>
                     </div>
                 </If>
             </li>
