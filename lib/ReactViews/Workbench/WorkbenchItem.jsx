@@ -105,6 +105,7 @@ const WorkbenchItem = createReactClass({
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
                         <ObjectList item={workbenchItem}/>
+                        <Legend item={workbenchItem}/>
                         <div>
                             Creation time: {workbenchItem.time}
                             Results: {workbenchItem.results}
