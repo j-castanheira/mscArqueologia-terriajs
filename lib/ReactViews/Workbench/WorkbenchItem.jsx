@@ -22,6 +22,8 @@ import ColorScaleRangeSection from './Controls/ColorScaleRangeSection';
 import ShortReport from './Controls/ShortReport';
 import StyleSelectorSection from './Controls/StyleSelectorSection';
 import ViewingControls from './Controls/ViewingControls';
+//import JSColor from './Controls/jscolor.js';
+
 
 import Styles from './workbench-item.scss';
 import Icon from '../Icon.jsx';
@@ -58,10 +60,15 @@ const WorkbenchItem = createReactClass({
 
     render() {
         const workbenchItem = this.props.item;
+        if(workbenchItem._dataSource !== undefined) {
+            if(workbenchItem._dataSource._legendHelper !== undefined) {
+                var itemColor = workbenchItem._dataSource._legendHelper._noColumnColorArray;
 
-
+                console.log(itemColor);
+            }
+        }
         //Edited: disables the usual information for data and enable cultural heritage object oriented information
-        //console.log(workbenchItem);
+
         if(workbenchItem.type == 'object-csv')
         return (
             <li
@@ -104,7 +111,6 @@ const WorkbenchItem = createReactClass({
 
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
-                        <ObjectList item={workbenchItem}/>
                         <Legend item={workbenchItem}/>
                         <div>
                             Creation time: {workbenchItem.time}

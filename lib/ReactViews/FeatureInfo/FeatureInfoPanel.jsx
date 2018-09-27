@@ -70,7 +70,6 @@ const FeatureInfoPanel = createReactClass({
 
     getFeatureInfoCatalogItems() {
         const {catalogItems, featureCatalogItemPairs} = getFeaturesGroupedByCatalogItems(this.props.terria);
-
         return catalogItems
             .filter(catalogItem => defined(catalogItem))
             .map((catalogItem, i) => {
@@ -182,13 +181,15 @@ const FeatureInfoPanel = createReactClass({
     render() {
         const terria = this.props.terria;
         const viewState = this.props.viewState;
+        //const features = featureCatalogItemPairs.filter(pair => pair.catalogItem === catalogItem).map(pair => pair.feature);
 
         const featureInfoCatalogItems = this.getFeatureInfoCatalogItems();
         const panelClassName = classNames(Styles.panel, {
             [Styles.isCollapsed]: viewState.featureInfoPanelIsCollapsed,
             [Styles.isVisible]: viewState.featureInfoPanelIsVisible
         });
-
+        //console.log(featureInfoCatalogItems);
+        //console.log(featureInfoCatalogItems[0].key);
         let position;
         if (defined(terria.selectedFeature) && defined(terria.selectedFeature.position)) {
             // If the clock is avaliable then use it, otherwise don't.
@@ -225,7 +226,7 @@ const FeatureInfoPanel = createReactClass({
                 aria-hidden={!viewState.featureInfoPanelIsVisible}>
                 {!this.props.printView && <div className={Styles.header}>
                     <button type='button' onClick={ this.toggleCollapsed } className={Styles.btnPanelHeading}>
-                        Feature Information
+                        Feature Information -
                     </button>
                     <button type='button' onClick={ this.close } className={Styles.btnCloseFeature}
                             title="Close data panel">
