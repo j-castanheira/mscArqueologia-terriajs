@@ -1,52 +1,60 @@
 'use strict';
 
-import SummaryConcept from './SummaryConcept/SummaryConcept';
-import Concept from './Concept';
+import classNames from 'classnames';
+import defined from 'terriajs-cesium/Source/Core/defined';
+import knockout from 'terriajs-cesium/Source/ThirdParty/knockout';
+import Loader from '../../Loader.jsx';
 import ObserveModelMixin from '../../ObserveModelMixin';
-import SummaryConceptModel from '../../../Map/SummaryConcept';
-
+import proxyCatalogItemUrl from '../../../Models/proxyCatalogItemUrl';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Styles from './concept-viewer.scss';
+import URI from 'urijs';
+import Styles from './objectList.scss';
+import ObjectItem from './ObjectItem';
 
 const ObjectList = createReactClass({
     displayName: 'ObjectList',
     mixins: [ObserveModelMixin],
 
     propTypes: {
-        item: PropTypes.object.isRequired
+        item: PropTypes.object
     },
 
     render() {
-        // All non-additive-conditions go in a single section. (If there are none, don't show a <div class=section> so we don't get an extra padding.)
-        // Each additive-condition goes in its own section.
-        const nonSummaryConcept = this.props.item.concepts.filter(concept => concept.isVisible && !SummaryConceptModel.prototype.isPrototypeOf(concept));
-        const data = this.props.item.data;
+//EDITED
+        console.log("LOADING", this.props.item.isLoading);
+
+        const datasource = this.props.item.dataSource;
+        let objects = undefined;
+        if(datasource !== undefined)
+            objects = datasource._rowObjects;
+        if(objects === undefined)
+            return false;
+        //console.log("OBJECTS",objects);
+        //console.log("DATASOURCE",datasource);
         return (
-            <div className={Styles.root}>
-                <If condition={nonSummaryConcept.length > 0}>
-                    <div className={Styles.section}>
-                        <For each="concept" index="i" of={nonSummaryConcept}>
-                            <div className={Styles.inner} key={i}>
-                                <ul className={Styles.childrenList}>
-                                    <Concept concept={concept} isLoading={this.props.item.isLoading}/>
-                                </ul>
-                            </div>
-                        </For>
-                    </div>
-                </If>
-                <For each="concept" index="i"
-                     of={this.props.item.concepts.filter(concept => concept.isVisible && SummaryConceptModel.prototype.isPrototypeOf(concept))}>
-                    <div className={Styles.section} key={i}>
-                        <ul className={Styles.childrenList}>
-                            <SummaryConcept concept={concept} isLoading={this.props.item.isLoading}/>
-                        </ul>
-                    </div>
-                </For>
-            </div>
+            <ul className={Styles.objectList}>
+                <div className={Styles.objectListInner}>
+                    <Choose>
+                        <When condition={this.props.item.isLoading}>
+                            <li className={Styles.loader}><Loader message={this.props.item.loadingMessage}/></li>
+                        </When>
+                        <Otherwise>
+                            {objects.map((object,k) => {
+                                return (
+                                    <ObjectItem key={k} object={object} list = {this}/>
+                                );
+                            })}
+                        </Otherwise>
+                    </Choose>
+
+                </div>
+            </ul>
         );
     },
 });
 
 module.exports = ObjectList;
+
+

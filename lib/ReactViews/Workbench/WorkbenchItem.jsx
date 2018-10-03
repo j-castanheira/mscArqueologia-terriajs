@@ -60,13 +60,14 @@ const WorkbenchItem = createReactClass({
 
     render() {
         const workbenchItem = this.props.item;
+        /**
         if(workbenchItem._dataSource !== undefined) {
             if(workbenchItem._dataSource._legendHelper !== undefined) {
                 var itemColor = workbenchItem._dataSource._legendHelper._noColumnColorArray;
 
                 console.log(itemColor);
             }
-        }
+        }**/
         //Edited: disables the usual information for data and enable cultural heritage object oriented information
 
         if(workbenchItem.type == 'object-csv')
@@ -111,7 +112,7 @@ const WorkbenchItem = createReactClass({
 
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
-                        <Legend item={workbenchItem}/>
+                        <ObjectList item={workbenchItem}/>
                         <div>
                             Creation time: {workbenchItem.time}
                             Results: {workbenchItem.results}

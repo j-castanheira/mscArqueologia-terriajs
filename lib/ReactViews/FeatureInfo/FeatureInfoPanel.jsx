@@ -188,8 +188,7 @@ const FeatureInfoPanel = createReactClass({
             [Styles.isCollapsed]: viewState.featureInfoPanelIsCollapsed,
             [Styles.isVisible]: viewState.featureInfoPanelIsVisible
         });
-        //console.log(featureInfoCatalogItems);
-        //console.log(featureInfoCatalogItems[0].key);
+
         let position;
         if (defined(terria.selectedFeature) && defined(terria.selectedFeature.position)) {
             // If the clock is avaliable then use it, otherwise don't.
