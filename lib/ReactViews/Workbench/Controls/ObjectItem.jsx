@@ -26,36 +26,38 @@ const ObjectItem = createReactClass({
 
     zoomToObject() {
         //console.log("CMON",this.props.object.number);
-        var objectId = this.props.object.number.ID;
-        console.log("OBJECT",this.props.object);
-        console.log("ID",objectId);
+        var objectId = this.props.object.number.Id;
+
         var terria = this.props.list.props.item.terria;
         //console.log("FEATURES",terria.pickedFeatures);
         //console.log("PICKEDFEATURE",terria.selectedFeature);
         terria.pickedFeatures = undefined;
         terria.selectedFeature = undefined;
-        console.log("VIEWER",terria.currentViewer);
-        console.log("DATASOURCE", this.props.list.props.item.dataSource._entityCollection);
-        console.log("SELECTED ENTITY",this.props.list.props.item.dataSource._entityCollection._entities._array[parseInt(objectId)]);
-        //var selectedEntity = this.props.list.props.item.dataSource._entityCollection._entities[objectId];
 
-        //Change this so it matches the features to the id
         var fakeFeature = this.props.list.props.item.dataSource._entityCollection._entities._array[parseInt(objectId)];
         var result = new PickedFeatures();
         result.isLoading = false;
         result.features.push(fakeFeature);
-        //Wait for some seconds and then open the feature information
-        setTimeout(() => {
-            terria.selectedFeature = fakeFeature;
-        }, 3000);
-
-        setTimeout(() => {
-            terria.pickedFeatures = result;
-            terria.selectedFeature = fakeFeature;
-        }, 3500);
+        /**
+        console.log("VIEWER",terria.currentViewer);
+        console.log("DATASOURCE", this.props.list.props.item.dataSource._entityCollection);
+        console.log("OBJECT",this.props.object);
+        console.log("Id",objectId);
+        console.log("SELECTED ENTITY",fakeFeature);
+        **/
 
         if(this.props.object.number.Longitude !== "NA")
         {
+            //Wait for some seconds and then open the feature information
+            setTimeout(() => {
+                terria.selectedFeature = fakeFeature;
+            }, 3000);
+
+            setTimeout(() => {
+                terria.pickedFeatures = result;
+                terria.selectedFeature = fakeFeature;
+            }, 3500);
+
             var longitude = this.props.object.number.Longitude;
             var latitude = this.props.object.number.Latitude;
             var offset = CesiumMath.EPSILON5 * 4;
@@ -68,7 +70,12 @@ const ObjectItem = createReactClass({
             return terria.currentViewer.zoomTo(rect);
         }
         else
-            return false;
+        {
+            terria.pickedFeatures = result;
+            terria.selectedFeature = fakeFeature;
+            return this.props.list.props.item.dataSource.zoomTo();
+        }
+
     },
 
     render() {
