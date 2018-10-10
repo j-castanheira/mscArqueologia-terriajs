@@ -46,6 +46,8 @@ const ObjectItem = createReactClass({
         console.log("SELECTED ENTITY",fakeFeature);
         **/
 
+        console.log("DATA", this.props.list.props.item);
+
         if(this.props.object.number.Longitude !== "NA")
         {
             //Wait for some seconds and then open the feature information
@@ -73,7 +75,7 @@ const ObjectItem = createReactClass({
         {
             terria.pickedFeatures = result;
             terria.selectedFeature = fakeFeature;
-            return this.props.list.props.item.dataSource.zoomTo();
+            return terria.currentViewer.zoomTo(this.props.list.props.item.rectangle);
         }
 
     },
