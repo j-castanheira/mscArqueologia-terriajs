@@ -60,6 +60,10 @@ const ObjectItem = createReactClass({
                 terria.selectedFeature = fakeFeature;
             }, 3500);
 
+            //Delete fakefeature
+            result.features.splice(result.features.length,1);
+
+
             var longitude = this.props.object.number.Longitude;
             var latitude = this.props.object.number.Latitude;
             var offset = CesiumMath.EPSILON5 * 4;
@@ -75,6 +79,8 @@ const ObjectItem = createReactClass({
         {
             terria.pickedFeatures = result;
             terria.selectedFeature = fakeFeature;
+            result.features.splice(result.features.length,1);
+            console.log("delete");
             return terria.currentViewer.zoomTo(this.props.list.props.item.rectangle);
         }
 
