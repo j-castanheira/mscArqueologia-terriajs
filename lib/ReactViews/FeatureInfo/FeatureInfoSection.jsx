@@ -46,6 +46,13 @@ const FeatureInfoSection = createReactClass({
         printView: PropTypes.bool
     },
 
+    openInteractionWindow()
+    {
+        let items = this.props.catalogItem.json;
+        let id = this.props.feature.properties._Id._value;
+        this.props.viewState.openInteraction(items[id]);
+    },
+
     getInitialState() {
         return {
             removeClockSubscription: undefined,
@@ -255,6 +262,9 @@ const FeatureInfoSection = createReactClass({
                                                     isOpen={this.props.isOpen}
                                                     onClickHeader={this.props.onClickHeader}/>
                         </For>
+                        <button type="button" className={Styles.rawDataButton} onClick={this.openInteractionWindow}>
+                            KNOW MORE
+                        </button>
                     </div>
                     </section>
                 </If>

@@ -5,6 +5,7 @@ import arrayContains from '../../Core/arrayContains';
 import Branding from './../SidePanel/Branding.jsx';
 import DragDropFile from './../DragDropFile.jsx';
 import ExplorerWindow from './../ExplorerWindow/ExplorerWindow.jsx';
+import InteractionWindow from './../ExplorerWindow/InteractionWindow.jsx';
 import FeatureInfoPanel from './../FeatureInfo/FeatureInfoPanel.jsx';
 import FeedbackForm from '../Feedback/FeedbackForm.jsx';
 import MapColumn from './MapColumn.jsx';
@@ -164,6 +165,10 @@ const StandardUserInterface = createReactClass({
                             />
                             <main>
                                 <ExplorerWindow
+                                    terria={terria}
+                                    viewState={this.props.viewState}
+                                />
+                                <InteractionWindow
                                     terria={terria}
                                     viewState={this.props.viewState}
                                 />
