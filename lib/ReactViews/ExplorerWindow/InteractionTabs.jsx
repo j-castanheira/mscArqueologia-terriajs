@@ -3,7 +3,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import DataCatalogTab from './Tabs/DataCatalogTab.jsx';
+import InformationTab from './Tabs/InformationTab.jsx';
 import MyDataTab from './Tabs/MyDataTab/MyDataTab.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
 import defined from 'terriajs-cesium/Source/Core/defined';
@@ -26,73 +26,43 @@ const InteractionTabs = createReactClass({
             return this.props.tabs;
         }
 
-        const myDataTab = {
-            name: 'My Data',
-            title: 'my-data',
-            category: 'my-data',
+        const exploreTab = {
+            name: 'Explore',
+            title: 'explore',
+            category: 'explore',
             panel: <MyDataTab terria={this.props.terria}
                                 viewState={this.props.viewState}
             />
         };
 
-        if (this.props.terria.configParameters.tabbedCatalog) {
-            return [].concat(this.props.terria.catalog.group.items.filter(member => member !== this.props.terria.catalog.userAddedDataGroup).map((member, i) => ({
-                name: member.nameInCatalog,
-                title: `data-catalog-${member.name}`,
-                category: 'data-catalog',
-                idInCategory: member.name,
-                panel: <DataCatalogTab terria={this.props.terria}
+        const infoTab =
+            {
+                name: 'Information',
+                title: 'information',
+                category: 'information',
+                panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
-                                       items={member.items || [member]}
-                                       searchPlaceholder="Search whole catalogue"
+                                       items={this.props.viewState.currentItem}
+                                       searchPlaceholder="Search the catalogue"
                 />
-            })), [myDataTab]);
-        } else {
-            return [
-                {
-                    name: 'Data Catalogue',
-                    title: 'data-catalog',
-                    category: 'data-catalog',
-                    panel: <DataCatalogTab terria={this.props.terria}
-                                        viewState={this.props.viewState}
-                                        items={this.props.terria.catalog.group.items}
-                                        searchPlaceholder="Search the catalogue"
-                    />
-                },
-                myDataTab
-            ];
-        }
+            };
+
+            return [infoTab,exploreTab];
     },
 
     activateTab(category, idInCategory) {
         this.props.viewState.activeTabCategory = category;
-        if (this.props.terria.configParameters.tabbedCatalog) {
-            this.props.viewState.activeTabIdInCategory = idInCategory;
-            if (category === 'data-catalog') {
-                const member = this.props.terria.catalog.group.items.filter(m => m.name === idInCategory)[0];
-                // If member was found and member can be opened, open it (causes CkanCatalogGroups to fetch etc.)
-                if (defined(member)) {
-                    if (member.toggleOpen) {
-                        member.isOpen = true;
-                    }
-                    this.props.viewState.previewedItem = member;
-                }
-            }
-        }
     },
 
     render() {
         const tabs = this.getTabs();
         const sameCategory = tabs.filter(t => t.category === this.props.viewState.activeTabCategory);
         const currentTab = sameCategory.filter(t => t.idInCategory === this.props.viewState.activeTabIdInCategory)[0] || sameCategory[0] || tabs[0];
-        const item = this.props.viewState.currentItem;
-        console.log(this.props.viewState.currentItem);
-        /**{item.dcTitle[0].text[0]}
-         {item.dcDescription[0].text[0]}**/
 
         return (
             <div className={Styles.tabs}>
                 <ul className={Styles.tabList} role="tablist">
+                    <For each="item" index="i" of={tabs}>
                         <li key={i}
                             id={'tablist--' + item.title}
                             className={Styles.tabListItem}
@@ -102,21 +72,10 @@ const InteractionTabs = createReactClass({
                             <button type='button'
                                     onClick={this.activateTab.bind(this, item.category, item.idInCategory)}
                                     className={classNames(Styles.btnTab, {[Styles.btnSelected]: item === currentTab})}>
-                                Information
+                                {item.name}
                             </button>
                         </li>
-                    <li key={i}
-                        id={'tablist--' + item.title}
-                        className={Styles.tabListItem}
-                        role="tab"
-                        aria-controls={'panel--' + item.title}
-                        aria-selected={item === currentTab}>
-                        <button type='button'
-                                onClick={this.activateTab.bind(this, item.category, item.idInCategory)}
-                                className={classNames(Styles.btnTab, {[Styles.btnSelected]: item === currentTab})}>
-                            Explore
-                        </button>
-                    </li>
+                    </For>
                 </ul>
 
                 <section
@@ -126,8 +85,6 @@ const InteractionTabs = createReactClass({
                     aria-labelledby={'tablist--' + currentTab.title}
                     role='tabpanel' tabIndex='0'>
                     <div className={Styles.panelContent}>
-                        {item.dcTitle[0].text[0]}
-                        {item.dcDescription[0].text[0]}
                         {currentTab.panel}
                     </div>
                 </section>
