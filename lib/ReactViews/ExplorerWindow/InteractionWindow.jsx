@@ -27,6 +27,7 @@ const InteractionWindow = createReactClass({
     },
 
     close() {
+        this.props.viewState.currentPropertyPreview = undefined;
         this.props.viewState.interactionPanelIsVisible = false;
         this.props.viewState.switchMobileView('nowViewing');
     },
@@ -112,7 +113,7 @@ const InteractionWindow = createReactClass({
                             className={Styles.btnCloseModal}
                             title="Close data panel"
                             data-target="close-modal">
-                        Done
+                        X
                     </button>
                     <InteractionTabs terria={this.props.terria} viewState={this.props.viewState}/>
                 </div>

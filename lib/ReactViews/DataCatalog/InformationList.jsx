@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 
 import defined from 'terriajs-cesium/Source/Core/defined';
 
-import DataCatalogMember from './DataCatalogMember.jsx';
+import InformationProperty from './InformationProperty.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
 import SearchHeader from '../Search/SearchHeader.jsx';
 
 import Styles from './data-catalog.scss';
 
-// Displays the data catalog.
+// Displays all the properties of an object in a list
 const InformationList = createReactClass({
     displayName: 'InformationList',
     mixins: [ObserveModelMixin],
@@ -24,30 +24,23 @@ const InformationList = createReactClass({
     },
 
     render() {
-        const searchState = this.props.viewState.searchState;
-        const isSearching = searchState.catalogSearchText.length > 0;
-        /**const items = (
-            isSearching ?
-                searchState.catalogSearchProvider.searchResults.map(result => result.catalogItem) :
-                this.props.items
-        ).filter(defined);**/
-        console.log("ITESM", this.prop.items);
-        let items = [];
+        let properties = [];
+        let rejectedProperties = ["dcTitle", "resources", "sourcePage", "sourceData", "sourceRepositorie"];
+        //Push all necessary properties into the list
         Object.keys(this.props.items).forEach(function(key,index) {
-            items.add(key);
             // key: the name of the object key
             // index: the ordinal position of the key within the object
+
+            if(!rejectedProperties.includes(key))
+            properties.push(key);
+
         });
 
         return (
             <ul className={Styles.dataCatalog}>
-                <If condition={isSearching}>
-                    <label className={Styles.label}>Search results</label>
-                    <SearchHeader searchProvider={searchState.catalogSearchProvider}
-                                  isWaitingForSearchToStart={searchState.isWaitingToStartCatalogSearch}/>
-                </If>
-                <For each="item" of={items}>
-                    {item}
+                <For each="item" of={properties}>
+                    <InformationProperty item={item} viewState={this.props.viewState} key={item}
+                    />
                 </For>
             </ul>
         );

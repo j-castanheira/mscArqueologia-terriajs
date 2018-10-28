@@ -58,7 +58,6 @@ const InteractionTabs = createReactClass({
         const tabs = this.getTabs();
         const sameCategory = tabs.filter(t => t.category === this.props.viewState.activeTabCategory);
         const currentTab = sameCategory.filter(t => t.idInCategory === this.props.viewState.activeTabIdInCategory)[0] || sameCategory[0] || tabs[0];
-
         return (
             <div className={Styles.tabs}>
                 <ul className={Styles.tabList} role="tablist">
