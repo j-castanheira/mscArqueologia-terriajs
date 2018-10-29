@@ -6,6 +6,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Styles from './information-preview.scss';
 
+
 /**
  * Information preview section
  */
@@ -41,7 +42,36 @@ const InformationPreview = createReactClass({
                             infoList.push(String(p[j]));
                         }
                 }
-                else continue
+                else
+                {
+                    if(info[i].language == undefined)
+                    {
+                        let loc = "";
+                        //LOCATIONS
+                        if(info[i].name != undefined)
+                        {
+                            for (j = 0; j < info[i].name.length; j++) {
+                                if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
+                                    info[i].name[j].text.forEach(function(n) {
+                                        loc += n + ", ";
+                                    });
+                                }
+                            }
+
+                        }
+
+                        if(info[i].coordinates != undefined)
+                        {
+                            loc += "Lat: " + info[i].coordinates[0].latitude + ", ";
+                            loc += "Long: " + info[i].coordinates[0].longitude;
+                        }
+                        infoList.push(loc);
+                    }
+                    else
+                    {
+                        continue
+                    }
+                }
             }
         }
 
@@ -62,8 +92,10 @@ const InformationPreview = createReactClass({
     },
 
     jumpToSlide(index) {
-        console.log("jump");
-        this.setState({ currentImg: index });
+        clearInterval(this.state.intervalId);
+        this.setState({ currentImg: index,
+        intervalId: setInterval(this.changeImg,this.state.timeToNext)});
+
     },
 
     componentDidMount(){
@@ -84,11 +116,13 @@ const InformationPreview = createReactClass({
         console.log(info);
         const infoList = this.getInfo(info);
         console.log(infoList);
-
+        this.state.images.map((slide, index) => (
+            console.log("img",slide)
+        ));
         //var images = this.props.viewState.currentItem.resources.map(image => image.url );
         //console.log("IMGS",images);
         console.log("img",this.state.images[this.state.currentImg]);
-
+//<img name="slide" src={this.state.images[this.state.currentImg]} height="200" width="200"></img>
         return (
             <div className={Styles.preview}>
                 <div className={Styles.root}>
@@ -97,16 +131,28 @@ const InformationPreview = createReactClass({
                         {'Visit ' + repository + ' page'}
                     </button>
                     <div className={Styles.previewedInfo}>
-                        <img name="slide" src={this.state.images[this.state.currentImg]} height="200" width="200"></img>
-                        <ul className="slideshow-dots">
+                        <div className={Styles.slideshow}>
+                            <ul className={Styles.slideshowslides}>
+                                {
+                                    this.state.images.map((slide, index) => (
+                                        <li className={ (index == this.state.currentImg) ? Styles.active : '' } key={index}>
+                                            <figure className={Styles.fifigure}>
+                                                <a target='_blank' href={slide}><img src={slide} /></a>
+                                            </figure>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        <ul className={Styles.slideshowdots}>
                             {
                                 this.state.images.map((slide, index) => (
-                                    <li className={ (index == this.state.currentImg) ? 'active': '' } key={index}>
+                                    <li className={ (index == this.state.currentImg) ? Styles.active : '' } key={index}>
                                         <a onClick={ (event)=> this.jumpToSlide(index) }>{ index + 1 }</a>
                                     </li>
                                 ))
                             }
                         </ul>
+                        </div>
                         <h3 className={Styles.h3}>{name}</h3>
                         <div>
                             <ul>

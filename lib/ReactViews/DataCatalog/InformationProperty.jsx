@@ -84,7 +84,9 @@ const InformationProperty = createReactClass({
           case 'agents': newName = "Agents"; break;
           case 'dcRights': newName = "Rights"; break;
           case 'dcLanguage': newName = "Language"; break;
-
+          case 'dcRelation': newName = "Relation"; break;
+          case 'technique': newName = "Technique"; break;
+          case 'createdIn': newName = "Created In"; break;
 
           default:
               newName = name;

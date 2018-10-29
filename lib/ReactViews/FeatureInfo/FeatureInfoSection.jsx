@@ -50,6 +50,7 @@ const FeatureInfoSection = createReactClass({
     {
         let items = this.props.catalogItem.json;
         let id = this.props.feature.properties._Id._value;
+        console.log("JSON",this.props.catalogItem.json);
         this.props.viewState.openInteraction(items[id]);
     },
 
@@ -263,7 +264,7 @@ const FeatureInfoSection = createReactClass({
                                                     onClickHeader={this.props.onClickHeader}/>
                         </For>
                         <button type="button" className={Styles.rawDataButton} onClick={this.openInteractionWindow}>
-                            KNOW MORE
+                            Discover More
                         </button>
                     </div>
                     </section>
