@@ -35,42 +35,141 @@ const InformationPreview = createReactClass({
         let i,j;
         if(info !=undefined) {
             for (i = 0; i < info.length; i++) {
+
+                if(this.props.previewed == "locations")
+                {
+                    let loc = "";
+                    //LOCATIONS
+                    if(info[i].name != undefined)
+                    {
+                        for (j = 0; j < info[i].name.length; j++) {
+                            if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
+                                info[i].name[j].text.forEach(function(n) {
+                                    loc += n + ", ";
+                                });
+                            }
+                        }
+
+                    }
+
+                    if(info[i].coordinates != undefined)
+                    {
+                        loc += "Lat: " + info[i].coordinates[0].latitude + ", ";
+                        loc += "Long: " + info[i].coordinates[0].longitude;
+                    }
+                    infoList.push(loc);
+                }
+
+                //AGENTS
+                if(this.props.previewed == "agents")
+                {
+                    let agent = "";
+                    //AGENTS
+                    if(info[i].name != undefined)
+                    {
+                        for (j = 0; j < info[i].name.length; j++) {
+                            if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
+                                info[i].name[j].text.forEach(function(n) {
+                                    agent += n + ", ";
+                                });
+                            }
+                        }
+
+                    }
+
+                    if(info[i].dateOfBirth!= undefined)
+                    {
+                        agent += info[i].dateOfBirth + " / ";
+                    }else {
+                        agent += "??? / ";
+                    }
+
+                    if(info[i].dateOfDeath != undefined)
+                    {
+                        agent += info[i].dateOfDeath;
+                    }
+                    else {
+                        agent += "???";
+                    }
+
+                    infoList.push(agent);
+                }
+
+                //TIMESPANS
+                if(this.props.previewed == "timeSpans")
+                {
+                    let times = "";
+                    //AGENTS
+                    if(info[i].name != undefined)
+                    {
+                        for (j = 0; j < info[i].name.length; j++) {
+                            if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
+                                info[i].name[j].text.forEach(function(n) {
+                                    times += n + ", ";
+                                });
+                            }
+                        }
+
+                    }
+                    //TIME ( HH:MM:SS - DD/MM/YYYY )
+                    if(info[i].begin!= undefined)
+                    {
+                        if(info[i].begin.hour != undefined)
+                        times += info[i].begin.hour + ":";
+                        else times += "??:";
+                        if(info[i].begin.minute != undefined)
+                        times += info[i].begin.minute + ":";
+                        else times += "??:";
+                        if(info[i].begin.second != undefined)
+                        times += info[i].begin.second + " - ";
+                        else times += "?? - ";
+                        if(info[i].begin.day != undefined)
+                            times += info[i].begin.day + "/";
+                        else times += "??/";
+                        if(info[i].begin.month != undefined)
+                            times += info[i].begin.month + "/";
+                        else times += "??/";
+                        if(info[i].begin.year != undefined)
+                            times += info[i].begin.year;
+                        else times += "????. ";
+                    }
+
+                    //TIME ( HH:MM:SS - DD/MM/YYYY )
+                    if(info[i].end != undefined)
+                    {
+                        if(info[i].end.hour != undefined)
+                            times += info[i].end.hour + ":";
+                        else times += "??:";
+                        if(info[i].end.minute != undefined)
+                            times += info[i].end.minute + ":";
+                        else times += "??:";
+                        if(info[i].end.second != undefined)
+                            times += info[i].end.second + " - ";
+                        else times += "?? - ";
+                        if(info[i].end.day != undefined)
+                            times += info[i].end.day + "/";
+                        else times += "??/";
+                        if(info[i].end.month != undefined)
+                            times += info[i].end.month + "/";
+                        else times += "??/";
+                        if(info[i].end.year != undefined)
+                            times += info[i].end.year;
+                        else times += "????. ";
+                    }
+
+                    infoList.push(times);
+                }
+
+                //OTHER THAN THE OTHERS
+                if(info[i].language != undefined)
+                {
                 if (info[i].language === "def" || info[i].language === "en") {
                     var p = info[i].text;
                     if (p != undefined)
                         for (j = 0; j < p.length; j++) {
                             infoList.push(String(p[j]));
                         }
-                }
-                else
-                {
-                    if(info[i].language == undefined)
-                    {
-                        let loc = "";
-                        //LOCATIONS
-                        if(info[i].name != undefined)
-                        {
-                            for (j = 0; j < info[i].name.length; j++) {
-                                if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
-                                    info[i].name[j].text.forEach(function(n) {
-                                        loc += n + ", ";
-                                    });
-                                }
-                            }
-
-                        }
-
-                        if(info[i].coordinates != undefined)
-                        {
-                            loc += "Lat: " + info[i].coordinates[0].latitude + ", ";
-                            loc += "Long: " + info[i].coordinates[0].longitude;
-                        }
-                        infoList.push(loc);
-                    }
-                    else
-                    {
-                        continue
-                    }
+                } else continue
                 }
             }
         }
