@@ -7,7 +7,7 @@
 
 .preview {
   height: 100%;
-  overflow: hidden;
+  overflow-y: scroll;
   font-family: $font-base;
   font-size: $font-size-mid-small;
 
@@ -40,6 +40,8 @@
   position: relative;
 
   h3 {
+    text-align: justify;
+    text-justify: inter-word;
     margin: 0;
   }
 
@@ -126,16 +128,16 @@
 }
 .slideshow {
   width: 80%;
-  height: 200px;
-  background: #000;
+  height: 300px;
+  background: #FFF;
   position: relative;
-  padding:20px;
   margin: auto;
 }
 .slideshowslides {
   list-style: none;
   margin: 0;
   padding: 0;
+  width: 100%;
 }
 .slideshowslides li {
   position: absolute;
@@ -144,14 +146,22 @@
   padding: 0;
   transition: .2s;
   opacity: 0;
+  height: auto;
 }
 .slideshowslides li.active {
   opacity: 1;
 }
-.fifigure {
+
+.slideshowslides li img {
+  object-fit: contain;
+  width: 100%; height: 100%;
   margin: auto;
-  padding: 0;
-  object-fit: cover;
+}
+
+.slideshowslides li .imgfit {
+  width: 100%;
+  height: 300px;
+  margin: auto;
 }
 
 .slideshowdots {
@@ -164,16 +174,16 @@
 }
 .slideshowdots li {
   display: inline;
-  margin: 0;
-  padding: 0;
+  margin: auto;
 }
+
 .slideshowdots a {
   cursor: pointer;
   display: inline-block;
   width: 10px;
   height: 10px;
   margin: 0 5px;
-  background: #fff;
+  background: $color-secondary;
   border-radius: 10px;
   text-indent: -9990px;
   opacity: .5;
@@ -181,4 +191,5 @@
 }
 .slideshowdots li.active a {
   opacity: 1;
+  background: $color-primary;
 }

@@ -7,9 +7,8 @@ import PropTypes from 'prop-types';
 import InformationList from '../../DataCatalog/InformationList.jsx';
 import InformationPreview from '../../Preview/InformationPreview.jsx';
 import ObserveModelMixin from '../../ObserveModelMixin';
-import SearchBox from '../../Search/SearchBox.jsx';
 
-import Styles from './data-catalog-tab.scss';
+import Styles from './information-tab.scss';
 
 // The Information Tab, to see all properties of an object
 const InformationTab = createReactClass({
@@ -20,7 +19,6 @@ const InformationTab = createReactClass({
         terria: PropTypes.object,
         viewState: PropTypes.object,
         items: PropTypes.object,
-        searchPlaceholder: PropTypes.string
     },
 
     render() {

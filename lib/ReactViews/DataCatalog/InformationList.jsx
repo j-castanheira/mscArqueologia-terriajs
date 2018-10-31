@@ -10,7 +10,7 @@ import InformationProperty from './InformationProperty.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
 import SearchHeader from '../Search/SearchHeader.jsx';
 
-import Styles from './data-catalog.scss';
+import Styles from './information-list.scss';
 
 // Displays all the properties of an object in a list
 const InformationList = createReactClass({
@@ -37,7 +37,7 @@ const InformationList = createReactClass({
         });
 
         return (
-            <ul className={Styles.dataCatalog}>
+            <ul className={Styles.informationlist}>
                 <For each="item" of={properties}>
                     <InformationProperty item={item} viewState={this.props.viewState} key={item}
                     />

@@ -163,13 +163,24 @@ const InformationPreview = createReactClass({
                 //OTHER THAN THE OTHERS
                 if(info[i].language != undefined)
                 {
-                if (info[i].language === "def" || info[i].language === "en") {
-                    var p = info[i].text;
-                    if (p != undefined)
-                        for (j = 0; j < p.length; j++) {
-                            infoList.push(String(p[j]));
-                        }
-                } else continue
+                    if(info[i].length == 1)
+                    {
+                        var p = info[i].text;
+                        if (p != undefined)
+                            for (j = 0; j < p.length; j++) {
+                                infoList.push(String(p[j]));
+                            }
+                    }
+                    else {
+
+                        if (info[i].language === "def" || info[i].language === "en") {
+                            var p = info[i].text;
+                            if (p != undefined)
+                                for (j = 0; j < p.length; j++) {
+                                    infoList.push(String(p[j]));
+                                }
+                        } else continue
+                    }
                 }
             }
         }
@@ -236,7 +247,7 @@ const InformationPreview = createReactClass({
                                     this.state.images.map((slide, index) => (
                                         <li className={ (index == this.state.currentImg) ? Styles.active : '' } key={index}>
                                             <figure className={Styles.fifigure}>
-                                                <a target='_blank' href={slide}><img src={slide} /></a>
+                                                <a target='_blank' href={slide}><div className={Styles.imgfit}><img src={slide} /></div></a>
                                             </figure>
                                         </li>
                                     ))

@@ -73,3 +73,13 @@
   margin-right: 1px;
   margin-top: 10px;
 }
+
+.icon--discover {
+  display: inline-block;
+  vertical-align: bottom;
+  svg{
+    height: 20px;
+    width: 20px;
+    fill: $text-light;
+  }
+}

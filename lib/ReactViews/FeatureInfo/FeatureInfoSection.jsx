@@ -220,11 +220,6 @@ const FeatureInfoSection = createReactClass({
                 </If>
                 <If condition={this.props.isOpen}>
                     <section className={Styles.content}>
-                    <If condition={!this.props.printView && this.hasTemplate()}>
-                        <button type="button" className={Styles.rawDataButton} onClick={this.toggleRawData}>
-                            {this.state.showRawData ? 'Show Curated Data' : 'Show Raw Data'}
-                        </button>
-                    </If>
                     <div>
                         <Choose>
                             <When condition={reactInfo.showRawData || !this.hasTemplate()}>
@@ -263,8 +258,13 @@ const FeatureInfoSection = createReactClass({
                                                     isOpen={this.props.isOpen}
                                                     onClickHeader={this.props.onClickHeader}/>
                         </For>
+                        <If condition={!this.props.printView && this.hasTemplate()}>
+                            <button type="button" className={Styles.rawDataButton} onClick={this.toggleRawData}>
+                                {this.state.showRawData ? 'Show Curated Data' : 'Show Raw Data'}
+                            </button>
+                        </If>
                         <button type="button" className={Styles.rawDataButton} onClick={this.openInteractionWindow}>
-                            Discover More
+                            <span className={Styles.iconDiscover}><Icon glyph={Icon.GLYPHS.search}/></span> Discover More
                         </button>
                     </div>
                     </section>

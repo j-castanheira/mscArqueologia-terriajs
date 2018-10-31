@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
 import InformationTab from './Tabs/InformationTab.jsx';
-import MyDataTab from './Tabs/MyDataTab/MyDataTab.jsx';
+import ExploreTab from './Tabs/ExploreTab.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
 import defined from 'terriajs-cesium/Source/Core/defined';
 
-import Styles from './tabs.scss';
+import Styles from './infotabs.scss';
 
 const InteractionTabs = createReactClass({
     displayName: 'InteractionTabs',
@@ -30,7 +30,7 @@ const InteractionTabs = createReactClass({
             name: 'Explore',
             title: 'explore',
             category: 'explore',
-            panel: <MyDataTab terria={this.props.terria}
+            panel: <ExploreTab terria={this.props.terria}
                                 viewState={this.props.viewState}
             />
         };
@@ -43,7 +43,6 @@ const InteractionTabs = createReactClass({
                 panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
                                        items={this.props.viewState.currentItem}
-                                       searchPlaceholder="Search the catalogue"
                 />
             };
 
