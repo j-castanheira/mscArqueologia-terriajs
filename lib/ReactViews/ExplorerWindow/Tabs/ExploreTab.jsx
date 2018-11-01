@@ -9,6 +9,7 @@ import InformationPreview from '../../Preview/InformationPreview.jsx';
 import ObserveModelMixin from '../../ObserveModelMixin';
 
 import Styles from './explore-tab.scss';
+import SketchComp from './SketchComp';
 
 // The Explore Tab, to visualize and interact with a 3D model and related objects
 const ExploreTab = createReactClass({
@@ -25,7 +26,10 @@ const ExploreTab = createReactClass({
         const terria = this.props.terria;
         return (
             <div className={Styles.root}>
-                HELLO MY LOVER
+                <div className={Styles.dataExplorer}>
+                    <SketchComp urlid="555575d8442342d4bd2f5f79c89b8a40" />
+                </div>
+                HELLO HOW ARE YOU
             </div>
         );
     },

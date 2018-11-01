@@ -20,6 +20,12 @@ const InteractionTabs = createReactClass({
         tabs: PropTypes.array
     },
 
+    getInitialState(){
+        return{
+            currentTab: 0
+        };
+    },
+
     getTabs() {
         // This can be passed in as prop
         if (this.props.tabs) {
@@ -30,6 +36,7 @@ const InteractionTabs = createReactClass({
             name: 'Explore',
             title: 'explore',
             category: 'explore',
+            tab: 0,
             panel: <ExploreTab terria={this.props.terria}
                                 viewState={this.props.viewState}
             />
@@ -40,23 +47,25 @@ const InteractionTabs = createReactClass({
                 name: 'Information',
                 title: 'information',
                 category: 'information',
+                tab: 1,
                 panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
                                        items={this.props.viewState.currentItem}
                 />
             };
 
-            return [infoTab,exploreTab];
+            return [exploreTab,infoTab];
     },
 
-    activateTab(category, idInCategory) {
-        this.props.viewState.activeTabCategory = category;
+    activateTab(tab) {
+        this.setState({
+            currentTab: tab
+        });
     },
 
     render() {
         const tabs = this.getTabs();
-        const sameCategory = tabs.filter(t => t.category === this.props.viewState.activeTabCategory);
-        const currentTab = sameCategory.filter(t => t.idInCategory === this.props.viewState.activeTabIdInCategory)[0] || sameCategory[0] || tabs[0];
+        const currentTab = tabs[this.state.currentTab];
         return (
             <div className={Styles.tabs}>
                 <ul className={Styles.tabList} role="tablist">
@@ -68,7 +77,7 @@ const InteractionTabs = createReactClass({
                             aria-controls={'panel--' + item.title}
                             aria-selected={item === currentTab}>
                             <button type='button'
-                                    onClick={this.activateTab.bind(this, item.category, item.idInCategory)}
+                                    onClick={this.activateTab.bind(this, item.tab)}
                                     className={classNames(Styles.btnTab, {[Styles.btnSelected]: item === currentTab})}>
                                 {item.name}
                             </button>
