@@ -6,6 +6,9 @@
 }
 
 .data-explorer {
+  width: 50%;
+  float: left;
+  height: 100%;
 }
 
 .data-catalog {
@@ -36,3 +39,34 @@
   composes: label from '../../../Sass/common/_labels.scss';
 }
 
+.slides {
+  position: absolute;
+  left: 61.8%;
+  top: 0;
+  width: 38.2%;
+  height: 100%;
+  overflow: auto;
+  background: #ffffff;
+}
+.slide {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 30px;
+  opacity: 0;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  transition: opacity .5s;
+  text-align: center;
+}
+.slideactive {
+  position: absolute;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 30px;
+  opacity: 1;
+  -webkit-transition: opacity .5s;
+  -moz-transition: opacity .5s;
+  transition: opacity .5s;
+  text-align: center;
+}

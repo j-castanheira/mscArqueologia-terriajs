@@ -12,10 +12,15 @@ const SketchComp = createReactClass({
     mixins: [ObserveModelMixin],
 
     propTypes: {
-        terria: PropTypes.object,
-        viewState: PropTypes.object,
-        items: PropTypes.object,
-        urlid: PropTypes.string
+        anot: PropTypes.string,
+        urlid: PropTypes.string,
+        handler: PropTypes.func
+    },
+
+    getInitialState(){
+        return{
+            _api: null
+        };
     },
 
     componentDidMount(){
@@ -28,22 +33,32 @@ const SketchComp = createReactClass({
                 api.start();
                 api.addEventListener('viewerready', function () {
 
+                    this.setState({_api: api});
                     // API is ready to use
                     // Insert your code here
                     console.log('Viewer is ready');
 
-                });
-            },
+                    this.state._api.addEventListener('annotationFocus', function(index) {
+                        //this.props.parent.setState({currentAnot: 1 + index})
+                        this.props.handler(index);
+                    }.bind(this));
+
+                }.bind(this));
+            }.bind(this),
             error: function onError() {
                 console.log('Viewer error');
             }
         });
+
     },
 
     render() {
+
+
+
         return (
-            <div>
-                <iframe src="" id="api-frame" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" width="50%" height="100%"/>
+            <div className={Styles.dataExplorer}>
+                <iframe src="" id="api-frame" allowFullScreen mozallowfullscreen="true" webkitallowfullscreen="true" width="100%" height="100%" style={{border: 'none'}}/>
             </div>
         )
     },
