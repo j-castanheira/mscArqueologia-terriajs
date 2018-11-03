@@ -6,8 +6,7 @@
 }
 
 .data-explorer {
-  width: 50%;
-  float: left;
+  width: 100%;
   height: 100%;
 }
 
@@ -39,20 +38,24 @@
   composes: label from '../../../Sass/common/_labels.scss';
 }
 
-.slides {
-  position: absolute;
-  left: 61.8%;
-  top: 0;
-  width: 38.2%;
+.tableft{
+  float: left;
+  width: 60%;
   height: 100%;
-  overflow: auto;
-  background: #ffffff;
 }
+.tabright{
+  float: right;
+  width: 40%;
+  height: 100%;
+}
+.clear{
+  clear: both;
+}
+
 .slide {
-  position: absolute;
   box-sizing: border-box;
   width: 100%;
-  padding: 30px;
+  height: 100%;
   opacity: 0;
   -webkit-transition: opacity .5s;
   -moz-transition: opacity .5s;
@@ -60,10 +63,9 @@
   text-align: center;
 }
 .slideactive {
-  position: absolute;
   box-sizing: border-box;
   width: 100%;
-  padding: 30px;
+  height: 100%;
   opacity: 1;
   -webkit-transition: opacity .5s;
   -moz-transition: opacity .5s;
