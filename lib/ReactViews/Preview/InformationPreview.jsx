@@ -5,7 +5,8 @@ import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Styles from './information-preview.scss';
-
+import SketchComp from '../ExplorerWindow/Tabs/SketchComp';
+import YouTube from 'react-youtube';
 
 /**
  * Information preview section
@@ -21,30 +22,27 @@ const InformationPreview = createReactClass({
         previewed: PropTypes.string
     },
 
-    getInitialState(){
-        return{
+    getInitialState() {
+        return {
             currentImg: 0,
             timeToNext: 3000,
             images: this.props.viewState.currentItem.resources.map(image => image.url)
         };
     },
 
-    getInfo(info)
-    {
+    getInfo(info) {
         let infoList = [];
-        let i,j;
-        if(info !=undefined) {
+        let i, j;
+        if (info != undefined) {
             for (i = 0; i < info.length; i++) {
 
-                if(this.props.previewed == "locations")
-                {
+                if (this.props.previewed == "locations") {
                     let loc = "";
                     //LOCATIONS
-                    if(info[i].name != undefined)
-                    {
+                    if (info[i].name != undefined) {
                         for (j = 0; j < info[i].name.length; j++) {
                             if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
-                                info[i].name[j].text.forEach(function(n) {
+                                info[i].name[j].text.forEach(function (n) {
                                     loc += n + ", ";
                                 });
                             }
@@ -52,8 +50,7 @@ const InformationPreview = createReactClass({
 
                     }
 
-                    if(info[i].coordinates != undefined)
-                    {
+                    if (info[i].coordinates != undefined) {
                         loc += "Lat: " + info[i].coordinates[0].latitude + ", ";
                         loc += "Long: " + info[i].coordinates[0].longitude;
                     }
@@ -61,15 +58,13 @@ const InformationPreview = createReactClass({
                 }
 
                 //AGENTS
-                if(this.props.previewed == "agents")
-                {
+                if (this.props.previewed == "agents") {
                     let agent = "";
                     //AGENTS
-                    if(info[i].name != undefined)
-                    {
+                    if (info[i].name != undefined) {
                         for (j = 0; j < info[i].name.length; j++) {
                             if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
-                                info[i].name[j].text.forEach(function(n) {
+                                info[i].name[j].text.forEach(function (n) {
                                     agent += n + ", ";
                                 });
                             }
@@ -77,15 +72,13 @@ const InformationPreview = createReactClass({
 
                     }
 
-                    if(info[i].dateOfBirth!= undefined)
-                    {
+                    if (info[i].dateOfBirth != undefined) {
                         agent += info[i].dateOfBirth + " / ";
-                    }else {
+                    } else {
                         agent += "??? / ";
                     }
 
-                    if(info[i].dateOfDeath != undefined)
-                    {
+                    if (info[i].dateOfDeath != undefined) {
                         agent += info[i].dateOfDeath;
                     }
                     else {
@@ -96,15 +89,13 @@ const InformationPreview = createReactClass({
                 }
 
                 //TIMESPANS
-                if(this.props.previewed == "timeSpans")
-                {
+                if (this.props.previewed == "timeSpans") {
                     let times = "";
                     //AGENTS
-                    if(info[i].name != undefined)
-                    {
+                    if (info[i].name != undefined) {
                         for (j = 0; j < info[i].name.length; j++) {
                             if (info[i].name[j].language === "def" || info[i].name[j].language === "en") {
-                                info[i].name[j].text.forEach(function(n) {
+                                info[i].name[j].text.forEach(function (n) {
                                     times += n + ", ";
                                 });
                             }
@@ -112,47 +103,45 @@ const InformationPreview = createReactClass({
 
                     }
                     //TIME ( HH:MM:SS - DD/MM/YYYY )
-                    if(info[i].begin!= undefined)
-                    {
-                        if(info[i].begin.hour != undefined)
-                        times += info[i].begin.hour + ":";
+                    if (info[i].begin != undefined) {
+                        if (info[i].begin.hour != undefined)
+                            times += info[i].begin.hour + ":";
                         else times += "??:";
-                        if(info[i].begin.minute != undefined)
-                        times += info[i].begin.minute + ":";
+                        if (info[i].begin.minute != undefined)
+                            times += info[i].begin.minute + ":";
                         else times += "??:";
-                        if(info[i].begin.second != undefined)
-                        times += info[i].begin.second + " - ";
+                        if (info[i].begin.second != undefined)
+                            times += info[i].begin.second + " - ";
                         else times += "?? - ";
-                        if(info[i].begin.day != undefined)
+                        if (info[i].begin.day != undefined)
                             times += info[i].begin.day + "/";
                         else times += "??/";
-                        if(info[i].begin.month != undefined)
+                        if (info[i].begin.month != undefined)
                             times += info[i].begin.month + "/";
                         else times += "??/";
-                        if(info[i].begin.year != undefined)
+                        if (info[i].begin.year != undefined)
                             times += info[i].begin.year;
                         else times += "????. ";
                     }
 
                     //TIME ( HH:MM:SS - DD/MM/YYYY )
-                    if(info[i].end != undefined)
-                    {
-                        if(info[i].end.hour != undefined)
+                    if (info[i].end != undefined) {
+                        if (info[i].end.hour != undefined)
                             times += info[i].end.hour + ":";
                         else times += "??:";
-                        if(info[i].end.minute != undefined)
+                        if (info[i].end.minute != undefined)
                             times += info[i].end.minute + ":";
                         else times += "??:";
-                        if(info[i].end.second != undefined)
+                        if (info[i].end.second != undefined)
                             times += info[i].end.second + " - ";
                         else times += "?? - ";
-                        if(info[i].end.day != undefined)
+                        if (info[i].end.day != undefined)
                             times += info[i].end.day + "/";
                         else times += "??/";
-                        if(info[i].end.month != undefined)
+                        if (info[i].end.month != undefined)
                             times += info[i].end.month + "/";
                         else times += "??/";
-                        if(info[i].end.year != undefined)
+                        if (info[i].end.year != undefined)
                             times += info[i].end.year;
                         else times += "????. ";
                     }
@@ -161,10 +150,8 @@ const InformationPreview = createReactClass({
                 }
 
                 //OTHER THAN THE OTHERS
-                if(info[i].language != undefined)
-                {
-                    if(info[i].length == 1)
-                    {
+                if (info[i].language != undefined) {
+                    if (info[i].length == 1) {
                         var p = info[i].text;
                         if (p != undefined)
                             for (j = 0; j < p.length; j++) {
@@ -188,32 +175,73 @@ const InformationPreview = createReactClass({
         return infoList;
     },
 
-    goSourcePage()
-    {
+    getType() {
+        let type = undefined;
+        let types = this.props.viewState.currentItem.dcType;
+        let i, j;
+        if (types != undefined) {
+            console.log("types: ", types);
+            for (i = 0; i < types.length; i++) {
+                var t = types[i].text;
+
+                    let tup = String(t[0]);
+                    tup = tup.toUpperCase();
+                    if(tup.includes("IMAGE"))
+                    {
+                        type = "IMAGE";
+                    }
+                    if(tup.includes("3D"))
+                    {
+                        type = "3D";
+                    }
+                    if(tup.includes("VIDEO"))
+                    {
+                        type = "VIDEO";
+                    }
+                    if(tup.includes("MOVIE"))
+                    {
+                        type = "MOVIE";
+                    }
+            }
+        }
+        else {
+            type = "IMAGE";
+        }
+        if(type == undefined) type = "IMAGE";
+        console.log("TYPE",type);
+        return type;
+    },
+
+    goSourcePage() {
         window.open(this.props.viewState.currentItem.sourcePage[0]);
     },
 
-    changeImg()
-    {
+    changeImg() {
         var img = this.state.currentImg;
-        if (img < this.state.images.length-1){img++} else {img=0}
+        if (img < this.state.images.length - 1) {
+            img++
+        } else {
+            img = 0
+        }
         this.setState({currentImg: img});
-        console.log("CURR",this.state.currentImg);
+        console.log("CURR", this.state.currentImg);
     },
 
     jumpToSlide(index) {
         clearInterval(this.state.intervalId);
-        this.setState({ currentImg: index,
-        intervalId: setInterval(this.changeImg,this.state.timeToNext)});
+        this.setState({
+            currentImg: index,
+            intervalId: setInterval(this.changeImg, this.state.timeToNext)
+        });
 
     },
 
-    componentDidMount(){
-        let intervalId = setInterval(this.changeImg,this.state.timeToNext);
-        this.setState({ intervalId: intervalId })
+    componentDidMount() {
+        let intervalId = setInterval(this.changeImg, this.state.timeToNext);
+        this.setState({intervalId: intervalId})
     },
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         clearInterval(this.state.intervalId);
     },
 
@@ -223,16 +251,24 @@ const InformationPreview = createReactClass({
         const repository = this.props.viewState.currentItem.sourceRepositorie[0];
         const name = this.props.viewState.currentItem.dcTitle[0].text[0];
         //const image = this.props.viewState.currentItem.resources[0].url;
-        console.log(info);
         const infoList = this.getInfo(info);
-        console.log(infoList);
-        this.state.images.map((slide, index) => (
-            console.log("img",slide)
-        ));
+        console.log("INFO", infoList);
         //var images = this.props.viewState.currentItem.resources.map(image => image.url );
         //console.log("IMGS",images);
-        console.log("img",this.state.images[this.state.currentImg]);
-//<img name="slide" src={this.state.images[this.state.currentImg]} height="200" width="200"></img>
+        //<img name="slide" src={this.state.images[this.state.currentImg]} height="200" width="200"></img>
+
+        const opts = {
+            height: '50%',
+            width: '100%',
+            playerVars: { // https://developers.google.com/youtube/player_parameters
+                color: 'white',
+                loop: 1,
+                rel: 0,
+                controls: 0
+            }
+        };
+
+        const type = this.getType();
         return (
             <div className={Styles.preview}>
                 <div className={Styles.root}>
@@ -241,34 +277,59 @@ const InformationPreview = createReactClass({
                         {'Visit ' + repository + ' page'}
                     </button>
                     <div className={Styles.previewedInfo}>
+
+
+                        {type == "IMAGE" ? (
                         <div className={Styles.slideshow}>
                             <ul className={Styles.slideshowslides}>
                                 {
                                     this.state.images.map((slide, index) => (
-                                        <li className={ (index == this.state.currentImg) ? Styles.active : '' } key={index}>
+                                        <li className={(index == this.state.currentImg) ? Styles.active : ''}
+                                            key={index}>
                                             <figure className={Styles.fifigure}>
-                                                <a target='_blank' href={slide}><div className={Styles.imgfit}><img src={slide} /></div></a>
+                                                <a target='_blank' href={slide}>
+                                                    <div className={Styles.imgfit}><img src={slide}/></div>
+                                                </a>
                                             </figure>
                                         </li>
                                     ))
                                 }
                             </ul>
-                        <ul className={Styles.slideshowdots}>
-                            {
-                                this.state.images.map((slide, index) => (
-                                    <li className={ (index == this.state.currentImg) ? Styles.active : '' } key={index}>
-                                        <a onClick={ (event)=> this.jumpToSlide(index) }>{ index + 1 }</a>
-                                    </li>
-                                ))
-                            }
-                        </ul>
-                        </div>
+                            <ul className={Styles.slideshowdots}>
+                                {
+                                    this.state.images.map((slide, index) => (
+                                        <li className={(index == this.state.currentImg) ? Styles.active : ''}
+                                            key={index}>
+                                            <a onClick={(event) => this.jumpToSlide(index)}>{index + 1}</a>
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </div>) : ""}
+
+                        {type == "3D" ? (
+                            <div>
+                                <SketchComp urlid="555575d8442342d4bd2f5f79c89b8a40"
+                                            handler={this.changeAnot} select={this.selectAnot}/>
+                            </div>
+                        ) : ""}
+
+                        {type == "VIDEO" ? (
+                            <div>
+                                <YouTube
+                                    videoId='IsD_BOg7N6k'
+                                    opts={opts}
+                                />
+                            </div>
+                            ) : ""}
+
+
                         <h3 className={Styles.h3}>{name}</h3>
                         <div>
                             <ul>
-                            {
-                                infoList.map((item, index) => <li key={index}>{item}</li>)
-                            }
+                                {
+                                    infoList.map((item, index) => <li key={index}>{item}</li>)
+                                }
                             </ul>
                         </div>
                     </div>

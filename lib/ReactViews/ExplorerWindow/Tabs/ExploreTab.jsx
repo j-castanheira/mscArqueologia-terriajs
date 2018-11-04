@@ -25,13 +25,19 @@ const ExploreTab = createReactClass({
 
     getInitialState() {
         return {
-            currentAnot: null
+            currentAnot: null,
+            selectedAnot: null
         };
     },
 
     changeAnot(index) {
         this.setState({currentAnot: index});
-        console.log(index);
+        console.log("CHANGE",index);
+    },
+
+    selectAnot(index) {
+        this.setState({selectedAnot: index});
+        console.log("SELECT",index);
     },
 
     render() {
@@ -56,11 +62,16 @@ const ExploreTab = createReactClass({
             <div className={Styles.root}>
                 <div className={Styles.tableft}>
                     <SketchComp urlid="555575d8442342d4bd2f5f79c89b8a40"
-                                anot={this.state.currentAnot} handler={this.changeAnot}/>
+                                handler={this.changeAnot} select={this.selectAnot}/>
                 </div>
                 <div className={Styles.tabright}>
                     {this.state.currentAnot == null ? (
-                        <p>Newgrange</p>) : ""}
+                        <div>
+                            <h1>Newgrange</h1>
+                            <p>Newgrange, the best known Irish passage tomb, is surrounded by a kerb of 97 stones, the most impressive of which is the highly decorated Entrance Stone. The mound covers a single tomb consisting of a long passage and a cross-shaped chamber. There are the remains of two smaller tombs immediately to the west of Newgrange and at least one and probably two to the east. Newgrange was excavated between 1962 and 1975 by Professor M. J. O’Kelly who discovered the Roof Box through which the mid-winter sun penetrates into the chamber. Based on archaeological evidence, he also designed the reconstruction of the white quartz façade.</p>
+                            <p>The great mound of Newgrange, 85m in max. dim. and 11m H, is delimited by a megalithic kerb. It covers a cruciform passage-tomb, 24m long, opening to SE. The chamber is roofed with a fine corbelled vault. There are two stone basins in NE recess; the others contain single basins. The 'roof box' above, some 2.4m back from the passage entrance, permits rays of the rising sun at midwinter solstice to penetrate to the chamber. Many of the kerb stones and a great number of the structural stones of the passage and chamber bear megalighic art. A circle of standing stones surrounds the mound, and three small passage-tombs are in close proximity to it.</p>
+                        </div>
+                        ) : ""}
                     {this.state.currentAnot == 0 ? (
                         <div id="annotation-entrance"
                              className={this.state.currentAnot == 0 ? Styles.slideactive : Styles.slide}>

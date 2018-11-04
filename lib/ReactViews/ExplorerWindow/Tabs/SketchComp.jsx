@@ -12,9 +12,9 @@ const SketchComp = createReactClass({
     mixins: [ObserveModelMixin],
 
     propTypes: {
-        anot: PropTypes.string,
         urlid: PropTypes.string,
-        handler: PropTypes.func
+        handler: PropTypes.func,
+        select: PropTypes.func
     },
 
     getInitialState(){
@@ -39,9 +39,13 @@ const SketchComp = createReactClass({
                     console.log('Viewer is ready');
 
                     this.state._api.addEventListener('annotationFocus', function(index) {
-                        //this.props.parent.setState({currentAnot: 1 + index})
                         this.props.handler(index);
                     }.bind(this));
+
+                    this.state._api.addEventListener('annotationSelect', function(index) {
+                        this.props.select(index);
+                    }.bind(this));
+
 
                 }.bind(this));
             }.bind(this),
