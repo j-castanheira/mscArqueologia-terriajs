@@ -25,7 +25,7 @@ const InformationList = createReactClass({
 
     render() {
         let properties = [];
-        let rejectedProperties = ["dcTitle", "resources", "sourcePage", "sourceData", "sourceRepositorie"];
+        let rejectedProperties = ["resources", "sourceData", "sourceRepositorie","isCombinedResut"];
         //Push all necessary properties into the list
         Object.keys(this.props.items).forEach(function(key,index) {
             // key: the name of the object key

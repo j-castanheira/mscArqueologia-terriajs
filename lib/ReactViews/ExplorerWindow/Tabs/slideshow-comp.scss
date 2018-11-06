@@ -1,0 +1,72 @@
+@import '~terriajs-variables';
+@import '../../../Sass/common/mixins';
+
+.root {
+}
+
+.slideshow {
+  width: 100%;
+  background: #FFF;
+  position: relative;
+  margin: auto;
+}
+.slideshowslides {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+.slideshowslides li {
+  position: absolute;
+  top: 0; right: 0; bottom: 0; left: 0;
+  margin: auto;
+  padding: 0;
+  transition: .2s;
+  opacity: 0;
+  height: auto;
+}
+.slideshowslides li.active {
+  opacity: 1;
+}
+
+.slideshowslides li img {
+  object-fit: contain;
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+
+.slideshowslides li .imgfit {
+  width: 100%;
+  height: auto;
+  margin: auto;
+}
+
+.slideshowdots {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  list-style: none;
+}
+.slideshowdots li {
+  display: inline;
+  margin: auto;
+}
+
+.slideshowdots a {
+  cursor: pointer;
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin: 0 5px;
+  background: $color-secondary;
+  border-radius: 10px;
+  text-indent: -9990px;
+  opacity: .5;
+  transition: .3s;
+}
+.slideshowdots li.active a {
+  opacity: 1;
+  background: $color-primary;
+}

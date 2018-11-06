@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import InformationTab from './Tabs/InformationTab.jsx';
 import ExploreTab from './Tabs/ExploreTab.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
-import defined from 'terriajs-cesium/Source/Core/defined';
+import Icon from '../Icon.jsx';
 
 import Styles from './infotabs.scss';
 
@@ -37,6 +37,7 @@ const InteractionTabs = createReactClass({
             title: 'explore',
             category: 'explore',
             tab: 0,
+            icon: Icon.GLYPHS.sphere,
             panel: <ExploreTab terria={this.props.terria}
                                 viewState={this.props.viewState}
             />
@@ -48,6 +49,7 @@ const InteractionTabs = createReactClass({
                 title: 'information',
                 category: 'information',
                 tab: 1,
+                icon: Icon.GLYPHS.menu,
                 panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
                                        items={this.props.viewState.currentItem}
@@ -79,7 +81,7 @@ const InteractionTabs = createReactClass({
                             <button type='button'
                                     onClick={this.activateTab.bind(this, item.tab)}
                                     className={classNames(Styles.btnTab, {[Styles.btnSelected]: item === currentTab})}>
-                                {item.name}
+                                <span className={Styles.iconDiscover}><Icon glyph={item.icon}/></span> {item.name}
                             </button>
                         </li>
                     </For>

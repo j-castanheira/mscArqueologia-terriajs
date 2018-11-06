@@ -73,6 +73,7 @@ const InformationProperty = createReactClass({
           case 'dcIdentifier': newName = "Identifier"; break;
           case 'dcSubject': newName = "Subject"; break;
           case 'dcType': newName = "Types"; break;
+          case 'dcTitle': newName = "Titles"; break;
           case 'locations': newName = "Locations"; break;
           case 'timeSpans': newName = "Time Spans"; break;
           case 'dcFormat': newName = "Format"; break;
@@ -87,6 +88,7 @@ const InformationProperty = createReactClass({
           case 'dcRelation': newName = "Relation"; break;
           case 'technique': newName = "Technique"; break;
           case 'createdIn': newName = "Created In"; break;
+          case 'sourcePage': newName = "Original page"; break;
 
           default:
               newName = name;

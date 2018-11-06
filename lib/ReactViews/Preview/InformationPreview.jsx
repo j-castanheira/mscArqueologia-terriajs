@@ -26,7 +26,7 @@ const InformationPreview = createReactClass({
         return {
             currentImg: 0,
             timeToNext: 3000,
-            images: this.props.viewState.currentItem.resources.map(image => image.url)
+            images: this.props.viewState.currentItem.resources.slice(1).map(image => image.url)
         };
     },
 
@@ -149,9 +149,14 @@ const InformationPreview = createReactClass({
                     infoList.push(times);
                 }
 
+                //PAGES
+                if (this.props.previewed === "sourcePage") {
+                    infoList.push(String(info[i]));
+                }
+
                 //OTHER THAN THE OTHERS
-                if (info[i].language != undefined) {
-                    if (info[i].length == 1) {
+                if (info[i].language !== undefined) {
+                    if (info[i].length === 1) {
                         var p = info[i].text;
                         if (p != undefined)
                             for (j = 0; j < p.length; j++) {
@@ -162,7 +167,7 @@ const InformationPreview = createReactClass({
 
                         if (info[i].language === "def" || info[i].language === "en") {
                             var p = info[i].text;
-                            if (p != undefined)
+                            if (p !== undefined)
                                 for (j = 0; j < p.length; j++) {
                                     infoList.push(String(p[j]));
                                 }
@@ -184,31 +189,30 @@ const InformationPreview = createReactClass({
             for (i = 0; i < types.length; i++) {
                 var t = types[i].text;
 
-                    let tup = String(t[0]);
-                    tup = tup.toUpperCase();
-                    if(tup.includes("IMAGE"))
-                    {
-                        type = "IMAGE";
-                    }
-                    if(tup.includes("3D"))
-                    {
-                        type = "3D";
-                    }
-                    if(tup.includes("VIDEO"))
-                    {
-                        type = "VIDEO";
-                    }
-                    if(tup.includes("MOVIE"))
-                    {
-                        type = "MOVIE";
-                    }
+                let tup = String(t[0]);
+                tup = tup.toUpperCase();
+                if (tup.includes("IMAGE")) {
+                    type = "IMAGE";
+                }
+                if (tup.includes("3D")) {
+                    type = "3D";
+                }
+                if (tup.includes("VIDEO")) {
+                    type = "VIDEO";
+                }
+                if (tup.includes("MOVIE")) {
+                    type = "VIDEO";
+                }
+
+                if (tup.includes("TEXT")) {
+                    type = "TEXT";
+                }
             }
         }
         else {
-            type = "IMAGE";
+            type = "NULL";
         }
-        if(type == undefined) type = "IMAGE";
-        console.log("TYPE",type);
+        if (type == undefined) type = "NULL";
         return type;
     },
 
@@ -236,6 +240,20 @@ const InformationPreview = createReactClass({
 
     },
 
+    getVideo() {
+        var url = String(this.state.images[1]);
+        var id = url.split('=');
+        return id[1];
+    },
+
+    getModel() {
+        var url = String(this.state.images[1]);
+        var id = url.split('/');
+        var l = id.length;
+        console.log("MODEL", id[l - 1]);
+        return id[l - 1];
+    },
+
     componentDidMount() {
         let intervalId = setInterval(this.changeImg, this.state.timeToNext);
         this.setState({intervalId: intervalId})
@@ -257,18 +275,27 @@ const InformationPreview = createReactClass({
         //console.log("IMGS",images);
         //<img name="slide" src={this.state.images[this.state.currentImg]} height="200" width="200"></img>
 
+        //Get type of resource and its url
+        const type = this.getType();
+        let resource = null;
+
+        if (type == "VIDEO") {
+            resource = this.getVideo();
+        }
+        if (type == "3D") {
+            resource = this.getModel();
+        }
+
+        //Video options for youtube
         const opts = {
-            height: '50%',
+            height: '100%',
             width: '100%',
             playerVars: { // https://developers.google.com/youtube/player_parameters
                 color: 'white',
-                loop: 1,
-                rel: 0,
-                controls: 0
+                rel: 0
             }
         };
 
-        const type = this.getType();
         return (
             <div className={Styles.preview}>
                 <div className={Styles.root}>
@@ -277,51 +304,45 @@ const InformationPreview = createReactClass({
                         {'Visit ' + repository + ' page'}
                     </button>
                     <div className={Styles.previewedInfo}>
-
-
                         {type == "IMAGE" ? (
-                        <div className={Styles.slideshow}>
-                            <ul className={Styles.slideshowslides}>
-                                {
-                                    this.state.images.map((slide, index) => (
-                                        <li className={(index == this.state.currentImg) ? Styles.active : ''}
-                                            key={index}>
-                                            <figure className={Styles.fifigure}>
-                                                <a target='_blank' href={slide}>
-                                                    <div className={Styles.imgfit}><img src={slide}/></div>
-                                                </a>
-                                            </figure>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                            <ul className={Styles.slideshowdots}>
-                                {
-                                    this.state.images.map((slide, index) => (
-                                        <li className={(index == this.state.currentImg) ? Styles.active : ''}
-                                            key={index}>
-                                            <a onClick={(event) => this.jumpToSlide(index)}>{index + 1}</a>
-                                        </li>
-                                    ))
-                                }
-                            </ul>
-                        </div>) : ""}
+                            <div className={Styles.slideshow}>
+                                <ul className={Styles.slideshowslides}>
+                                    {
+                                        this.state.images.map((slide, index) => (
+                                            <li className={(index == this.state.currentImg) ? Styles.active : ''}
+                                                key={index}>
+                                                <figure className={Styles.fifigure}>
+                                                    <a target='_blank' href={this.state.images[this.state.currentImg]}>
+                                                        <div className={Styles.imgfit}><img src={slide}/></div>
+                                                    </a>
+                                                </figure>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                                <ul className={Styles.slideshowdots}>
+                                    {
+                                        this.state.images.map((slide, index) => (
+                                            <li className={(index == this.state.currentImg) ? Styles.active : ''}
+                                                key={index}>
+                                                <a onClick={(event) => this.jumpToSlide(index)}>{index + 1}</a>
+                                            </li>
+                                        ))
+                                    }
+                                </ul>
+                            </div>) : ""}
 
                         {type == "3D" ? (
-                            <div>
-                                <SketchComp urlid="555575d8442342d4bd2f5f79c89b8a40"
-                                            handler={this.changeAnot} select={this.selectAnot}/>
+                            <div className={Styles.slideshow}>
+                                <SketchComp urlid={resource}/>
                             </div>
                         ) : ""}
 
                         {type == "VIDEO" ? (
-                            <div>
-                                <YouTube
-                                    videoId='IsD_BOg7N6k'
-                                    opts={opts}
-                                />
+                            <div className={Styles.slideshow}>
+                                <YouTube videoId={resource} opts={opts}/>
                             </div>
-                            ) : ""}
+                        ) : ""}
 
 
                         <h3 className={Styles.h3}>{name}</h3>
