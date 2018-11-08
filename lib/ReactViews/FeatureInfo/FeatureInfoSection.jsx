@@ -264,6 +264,9 @@ const FeatureInfoSection = createReactClass({
                             </button>
                         </If>
                         <button type="button" className={Styles.rawDataButton} onClick={this.openInteractionWindow}>
+                            <span className={Styles.iconRelated}><Icon glyph={Icon.GLYPHS.showMore}/></span> Related Resources
+                        </button>
+                        <button type="button" className={Styles.rawDataButton2} onClick={this.openInteractionWindow}>
                             <span className={Styles.iconDiscover}><Icon glyph={Icon.GLYPHS.search}/></span> Discover More
                         </button>
                     </div>

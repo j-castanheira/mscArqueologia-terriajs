@@ -1,0 +1,42 @@
+@import '~terriajs-variables';
+
+.object-button {
+  line-height: $btn-default-line-height;
+  text-decoration: none;
+  font-size: $font-size-button;
+  font-family: $font-base;
+  box-shadow: none;
+  display: inline;
+  background: $color-secondary;
+  color: $text-light;
+  text-align: left;
+  width: 100%;
+  border: 0;
+  border-radius: $radius-small;
+  &:hover, &--hover {
+    background: get-hover-color($color-primary);
+  }
+}
+
+.objectLi{
+  margin-bottom: 2px;
+  display: block;
+}
+
+.loader{
+  font-family: $font-base;
+  svg{
+     fill: #fff;
+  }
+}
+
+.icon--coordinates {
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-right: 2px;
+  svg {
+    height: 16px;
+    width: 16px;
+    fill: #fff;
+  }
+}

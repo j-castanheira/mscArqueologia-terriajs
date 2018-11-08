@@ -109,7 +109,6 @@ const WorkbenchItem = createReactClass({
                 </ul>
 
                 <If condition={workbenchItem.isLegendVisible}>
-
                     <div className={Styles.inner}>
                         <ViewingControls item={workbenchItem} viewState={this.props.viewState}/>
                         <ObjectList item={workbenchItem}/>

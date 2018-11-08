@@ -64,6 +64,11 @@ const GLYPHS = {
     timeline: require('../../wwwroot/images/icons/timeline.svg'),
     data: require('../../wwwroot/images/icons/data.svg'),
     upload: require('../../wwwroot/images/icons/ar-hover.svg'),
+    // Added
+    text: require('../../wwwroot/images/icons/file.svg'),
+    image: require('../../wwwroot/images/icons/image.svg'),
+    model: require('../../wwwroot/images/icons/cube.svg'),
+    video: require('../../wwwroot/images/icons/video.svg')
 };
 
 const Icon = createReactClass({

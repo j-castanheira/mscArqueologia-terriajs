@@ -6,7 +6,7 @@
   position: relative;
   height: calc(100vh - #{$workbench-header + $logo-height});
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: scroll;
   padding: 0 $padding-small;
 
   @media (max-width : $sm) {

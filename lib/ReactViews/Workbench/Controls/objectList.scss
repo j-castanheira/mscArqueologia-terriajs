@@ -4,9 +4,12 @@
   composes: clearfix from '../../../Sass/common/_base.scss';
   composes: list-reset from '../../../Sass/common/_base.scss';
   font-family: $font-mono;
-  font-size: $font-size-small;
+  font-size: $font-size-mid-large;
 
   li {
+    display: block;
+  }
+  ul {
     display: block;
   }
   .legendImagehasError{
@@ -14,36 +17,35 @@
   }
 }
 
-.objectListInner {
-  a{
-    // Only the actual legend should be clickable rather than the whole area
-    display: inline-block;
-  }
-  img {
-    display: inline-block;
-    background: #fff;
-    max-width: 100%;
-  }
-  padding: $padding 0 0 0;
+.type--list{
+  font-size: $font-size-mid-large;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 2px;
+
 }
 
-.legend--svg {
-  text {
+.icon--types {
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin-right: 2px;
+  svg {
+    height: 20px;
+    width: 20px;
     fill: #fff;
   }
-  :global .tick-mark {
-    stroke: #fff;
-  }
-  svg {
-    width: 100%;
-    display: block;
-    :global rect.background {
-      width: 100%;
-      fill: rgba(#fff, 0.15);
-    }
-  }
 }
 
+.icon--tab {
+  display: inline-block;
+  vertical-align: text-bottom;
+  float: right;
+  svg {
+    height: 20px;
+    width: 20px;
+    fill: #fff;
+  }
+}
 
 .loader{
   font-family: $font-base;
@@ -54,4 +56,22 @@
 
 .imageAnchor {
   max-width: 100%;
+}
+
+.object-button {
+  line-height: $btn-default-line-height;
+  text-decoration: none;
+  font-size: $font-size-button;
+  font-family: $font-base;
+  box-shadow: none;
+  display: inline;
+  background: $color-primary;
+  color: $text-light;
+  text-align: left;
+  width: 100%;
+  border: 0;
+  border-radius: $radius-small;
+  &:hover, &--hover {
+    background: get-hover-color($color-primary);
+  }
 }

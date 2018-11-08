@@ -9,7 +9,9 @@ import proxyCatalogItemUrl from '../../../Models/proxyCatalogItemUrl';
 import React from 'react';
 import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
-import Styles from './legend.scss';
+import Styles from './objectItem.scss';
+import Icon from '../../Icon.jsx';
+
 var Rectangle = require('terriajs-cesium/Source/Core/Rectangle');
 var CesiumMath = require('terriajs-cesium/Source/Core/Math');
 var PickedFeatures = require('../../../Map/PickedFeatures');
@@ -25,12 +27,9 @@ const ObjectItem = createReactClass({
     },
 
     zoomToObject() {
-        //console.log("CMON",this.props.object.number);
         var objectId = this.props.object.number.Id;
 
         var terria = this.props.list.props.item.terria;
-        //console.log("FEATURES",terria.pickedFeatures);
-        //console.log("PICKEDFEATURE",terria.selectedFeature);
         terria.pickedFeatures = undefined;
         terria.selectedFeature = undefined;
 
@@ -39,18 +38,17 @@ const ObjectItem = createReactClass({
         result.isLoading = false;
         result.features.push(fakeFeature);
         /**
-        console.log("VIEWER",terria.currentViewer);
-        console.log("DATASOURCE", this.props.list.props.item.dataSource._entityCollection);
-        console.log("OBJECT",this.props.object);
-        console.log("Id",objectId);
-        console.log("SELECTED ENTITY",fakeFeature);
-        **/
+         console.log("VIEWER",terria.currentViewer);
+         console.log("DATASOURCE", this.props.list.props.item.dataSource._entityCollection);
+         console.log("OBJECT",this.props.object);
+         console.log("Id",objectId);
+         console.log("SELECTED ENTITY",fakeFeature);
+         **/
 
         console.log("DATA", this.props.list.props.item);
 
-        if(this.props.object.number.Longitude !== "NA")
-        {
-            //Wait for some seconds and then open the feature information
+        if (this.props.object.number.Longitude !== "NA") {
+            // Wait for some seconds and then open the feature information
             setTimeout(() => {
                 terria.selectedFeature = fakeFeature;
             }, 3000);
@@ -60,45 +58,44 @@ const ObjectItem = createReactClass({
                 terria.selectedFeature = fakeFeature;
             }, 3500);
 
-            //Delete fakefeature
-            result.features.splice(result.features.length,1);
+            // Delete fakefeature
+            result.features.splice(result.features.length, 1);
 
 
-            var longitude = this.props.object.number.Longitude;
-            var latitude = this.props.object.number.Latitude;
-            var offset = CesiumMath.EPSILON5 * 4;
-            var north = CesiumMath.toRadians(latitude) + offset;
-            var south = CesiumMath.toRadians(latitude) - offset;
-            var east = CesiumMath.toRadians(longitude) + offset;
-            var west = CesiumMath.toRadians(longitude) - offset;
-            var rect = new Rectangle(west, south, east, north);
+            const longitude = this.props.object.number.Longitude;
+            const latitude = this.props.object.number.Latitude;
+            const offset = CesiumMath.EPSILON5 * 4;
+            const north = CesiumMath.toRadians(latitude) + offset;
+            const south = CesiumMath.toRadians(latitude) - offset;
+            const east = CesiumMath.toRadians(longitude) + offset;
+            const west = CesiumMath.toRadians(longitude) - offset;
+            const rect = new Rectangle(west, south, east, north);
 
             return terria.currentViewer.zoomTo(rect);
         }
-        else
-        {
+        else {
             terria.pickedFeatures = result;
             terria.selectedFeature = fakeFeature;
-            result.features.splice(result.features.length,1);
-            console.log("delete");
+            result.features.splice(result.features.length, 1);
             return terria.currentViewer.zoomTo(this.props.list.props.item.rectangle);
         }
 
     },
 
     render() {
-        var hasCoordinates = "Y";
-        if(this.props.object.number.Longitude === "NA")
-            hasCoordinates = "X";
-        const objectTitle = hasCoordinates + " - " + this.props.object.number.Title;
+        let iconCoordinates = Icon.GLYPHS.location;
+        if (this.props.object.number.Longitude === "NA")
+            iconCoordinates = Icon.GLYPHS.remove;
+        let objTitle = this.props.object.number.Title;
+        const titleLength = objTitle.length;
+        if(titleLength > 35)
+            objTitle = objTitle.slice(0,35) + "...";
         return (
-            <div
-                onMouseDown={this.zoomToObject}
-                onTouchStart={this.zoomToObject}>
-                <li className="Object">
-                    <a>{objectTitle}</a>
+                <li className={Styles.objectLi}>
+                    <button type="button" className={Styles['object-button']} onClick={this.zoomToObject}>
+                        <span className={Styles["icon--coordinates"]}><Icon glyph={iconCoordinates}/></span>{objTitle}
+                    </button>
                 </li>
-            </div>
         );
 
 
