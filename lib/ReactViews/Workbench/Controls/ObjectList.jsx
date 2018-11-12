@@ -47,19 +47,24 @@ const ObjectList = createReactClass({
         }
 
         switch (type) {
-            case 'IMAGE': this.setState({images: typeL});
+            case 'IMAGE':
+                this.setState({images: typeL});
                 break;
 
-            case 'TEXT': this.setState({texts: typeL});
+            case 'TEXT':
+                this.setState({texts: typeL});
                 break;
 
-            case 'VIDEO': this.setState({videos: typeL});
+            case 'VIDEO':
+                this.setState({videos: typeL});
                 break;
 
-            case '3D': this.setState({models: typeL});
+            case '3D':
+                this.setState({models: typeL});
                 break;
 
-            case 'null': this.setState({others: typeL});
+            case 'null':
+                this.setState({others: typeL});
                 break;
 
         }
@@ -82,9 +87,9 @@ const ObjectList = createReactClass({
     },
 
     render() {
-        let datasource = this.props.item.dataSource;
+        const datasource = this.props.item.dataSource;
         let objects;
-        if (datasource !== undefined)
+        if (defined(datasource))
             objects = datasource._rowObjects;
 
         let modelList = [];
@@ -94,7 +99,7 @@ const ObjectList = createReactClass({
         let othersList = [];
 
         // We have a finite number of categories for the resources
-        if (objects !== undefined) {
+        if (defined(objects)) {
             modelList = this.getResources(objects, '3D');
             imageList = this.getResources(objects, 'IMAGE');
             textList = this.getResources(objects, 'TEXT');
@@ -104,111 +109,109 @@ const ObjectList = createReactClass({
 
         return (
             <ul className={Styles.objectList}>
-                <Choose>
-                    <When condition={objects === undefined}>
-                        <li className={Styles.loader}><Loader message={this.props.item.loadingMessage}/></li>
-                    </When>
-                    <Otherwise>
-                        <li className={Styles['type--list']}>
-                            <button type="button" className={Styles['object-button']}
-                                    onClick={() => {
-                                        this.changeTab('IMAGE');
-                                    }}>
+                {objects === undefined ?
+                    <li className={Styles.loader}><Loader message={this.props.item.loadingMessage}/></li>
+                    :
+                    <li>
+                    <li className={Styles['type--list']}>
+                        <button type="button" className={Styles['object-button']}
+                                onClick={() => {
+                                    this.changeTab('IMAGE');
+                                }}>
                                     <span className={Styles["icon--types"]}><Icon
                                         glyph={Icon.GLYPHS.image}/></span> Image Resources ({this.state.images})
-                                <span className={Styles["icon--tab"]}><Icon
-                                    glyph={this.state.openTab === 'IMAGE' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
-                            </button>
-                        </li>
-                        {this.state.openTab === 'IMAGE' ?
-                            imageList.map((object, k) => {
-                                return (
-                                    <ObjectItem key={k} object={object} list={this}/>
-                                );
-                            }) : ""}
+                            <span className={Styles["icon--tab"]}><Icon
+                                glyph={this.state.openTab === 'IMAGE' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                        </button>
+                    </li>
+                {this.state.openTab === 'IMAGE' ?
+                    imageList.map((object, k) => {
+                    return (
+                    <ObjectItem key={k} object={object} list={this}/>
+                    );
+                }) : ""}
 
-                        <li className={Styles['type--list']}>
-                            <button type="button" className={Styles['object-button']}
-                                    onClick={() => {
-                                        this.changeTab('VIDEO');
-                                    }}>
-                                    <span className={Styles["icon--types"]}><Icon
-                                        glyph={Icon.GLYPHS.video}/></span> Video Resources ({this.state.videos})
+                    <li className={Styles['type--list']}>
+                    <button type="button" className={Styles['object-button']}
+                    onClick={() => {
+                    this.changeTab('VIDEO');
+                }}>
+                    <span className={Styles["icon--types"]}><Icon
+                    glyph={Icon.GLYPHS.video}/></span> Video Resources ({this.state.videos})
 
-                                <span className={Styles["icon--tab"]}><Icon
-                                    glyph={this.state.openTab === 'VIDEO' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
-                            </button>
-                        </li>
+                    <span className={Styles["icon--tab"]}><Icon
+                    glyph={this.state.openTab === 'VIDEO' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                    </button>
+                    </li>
 
-                        {this.state.openTab === 'VIDEO' ?
-                            videoList.map((object, k) => {
-                                return (
-                                    <ObjectItem key={k} object={object} list={this}/>
-                                );
-                            }) : ""}
+                {this.state.openTab === 'VIDEO' ?
+                    videoList.map((object, k) => {
+                    return (
+                    <ObjectItem key={k} object={object} list={this}/>
+                    );
+                }) : ""}
 
-                        <li className={Styles['type--list']}>
-                            <button type="button" className={Styles['object-button']}
-                                    onClick={() => {
-                                        this.changeTab('MODEL');
-                                    }}>
-                                <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.model}/></span> 3D
-                                Resources ({this.state.models})
+                    <li className={Styles['type--list']}>
+                    <button type="button" className={Styles['object-button']}
+                    onClick={() => {
+                    this.changeTab('MODEL');
+                }}>
+                    <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.model}/></span> 3D
+                    Resources ({this.state.models})
 
-                                <span className={Styles["icon--tab"]}><Icon
-                                    glyph={this.state.openTab === 'MODEL' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
-                            </button>
-                        </li>
+                    <span className={Styles["icon--tab"]}><Icon
+                    glyph={this.state.openTab === 'MODEL' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                    </button>
+                    </li>
 
-                        {this.state.openTab === 'MODEL' ?
-                            modelList.map((object, k) => {
-                                return (
-                                    <ObjectItem key={k} object={object} list={this}/>
-                                );
-                            }) : ""}
+                {this.state.openTab === 'MODEL' ?
+                    modelList.map((object, k) => {
+                    return (
+                    <ObjectItem key={k} object={object} list={this}/>
+                    );
+                }) : ""}
 
-                        <li className={Styles['type--list']}>
-                            <button type="button" className={Styles['object-button']}
-                                    onClick={() => {
-                                        this.changeTab('TEXT');
-                                    }}>
-                                <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.text}/></span> Text
-                                Resources ({this.state.texts})
+                    <li className={Styles['type--list']}>
+                    <button type="button" className={Styles['object-button']}
+                    onClick={() => {
+                    this.changeTab('TEXT');
+                }}>
+                    <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.text}/></span> Text
+                    Resources ({this.state.texts})
 
-                                <span className={Styles["icon--tab"]}><Icon
-                                    glyph={this.state.openTab === 'TEXT' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
-                            </button>
-                        </li>
+                    <span className={Styles["icon--tab"]}><Icon
+                    glyph={this.state.openTab === 'TEXT' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                    </button>
+                    </li>
 
-                        {this.state.openTab === 'TEXT' ?
-                            textList.map((object, k) => {
-                                return (
-                                    <ObjectItem key={k} object={object} list={this}/>
-                                );
-                            }) : ""}
+                {this.state.openTab === 'TEXT' ?
+                    textList.map((object, k) => {
+                    return (
+                    <ObjectItem key={k} object={object} list={this}/>
+                    );
+                }) : ""}
 
-                        <li className={Styles['type--list']}>
-                            <button type="button" className={Styles['object-button']}
-                                    onClick={() => {
-                                        this.changeTab('OTHER');
-                                    }}>
-                                <span className={Styles["icon--types"]}><Icon
-                                    glyph={Icon.GLYPHS.radioOff}/></span> Other
-                                Resources ({this.state.others})
+                    <li className={Styles['type--list']}>
+                    <button type="button" className={Styles['object-button']}
+                    onClick={() => {
+                    this.changeTab('OTHER');
+                }}>
+                    <span className={Styles["icon--types"]}><Icon
+                    glyph={Icon.GLYPHS.radioOff}/></span> Other
+                    Resources ({this.state.others})
 
-                                <span className={Styles["icon--tab"]}><Icon
-                                    glyph={this.state.openTab === 'OTHER' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
-                            </button>
-                        </li>
+                    <span className={Styles["icon--tab"]}><Icon
+                    glyph={this.state.openTab === 'OTHER' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                    </button>
+                    </li>
 
-                        {this.state.openTab === 'OTHER' ?
-                            othersList.map((object, k) => {
-                                return (
-                                    <ObjectItem key={k} object={object} list={this}/>
-                                );
-                            }) : ""}
-                    </Otherwise>
-                </Choose>
+                {this.state.openTab === 'OTHER' ?
+                    othersList.map((object, k) => {
+                    return (
+                    <ObjectItem key={k} object={object} list={this}/>
+                    );
+                }) : ""}
+                    </li>}
             </ul>
         );
     },

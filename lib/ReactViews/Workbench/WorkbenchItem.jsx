@@ -44,12 +44,6 @@ const WorkbenchItem = createReactClass({
         setWrapperState: PropTypes.func
     },
 
-    getInitialState() {
-        return {
-            entityColor: [],
-        };
-    },
-
     toggleDisplay() {
         this.props.item.isLegendVisible = !this.props.item.isLegendVisible;
     },
@@ -66,24 +60,6 @@ const WorkbenchItem = createReactClass({
         this.props.item.isShown = !this.props.item.isShown;
     },
 
-    componentDidMount() {
-        const workbenchItem = this.props.item;
-        let colorArray;
-        let color = [];
-        if(workbenchItem._dataSource !== undefined)
-        {
-            if(workbenchItem._dataSource._legendHelper !== undefined) {
-                colorArray = workbenchItem._dataSource._legendHelper._noColumnColorArray;
-                color = Color.fromBytes(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
-            }
-        }
-
-        this.setState({
-            entityColor: color
-        });
-
-    },
-
     render() {
         const workbenchItem = this.props.item;
         const datasource = workbenchItem._dataSource;
@@ -96,13 +72,22 @@ const WorkbenchItem = createReactClass({
             }
         }**/
         // Edited: disables the usual information for data and enable cultural heritage object oriented information
+        let colorArray;
+        let color = [];
+        if(workbenchItem._dataSource !== undefined)
+        {
+            if(workbenchItem._dataSource._legendHelper !== undefined) {
+                colorArray = workbenchItem._dataSource._legendHelper._noColumnColorArray;
+                color = Color.fromBytes(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+            }
+        }
 
         if(workbenchItem.type === 'object-csv'){
             const styles = {
                 margin: '0px',
                 width: '100%',
                 height: '5px',
-                backgroundColor: 'rgb(' + String(this.state.entityColor['red']*255) + ',' + String(this.state.entityColor['green']*255) + ',' + String(this.state.entityColor['blue']*255) + ')',
+                backgroundColor: 'rgb(' + String(color['red']*255) + ',' + String(color['green']*255) + ',' + String(color['blue']*255) + ')',
             };
 
         return (
