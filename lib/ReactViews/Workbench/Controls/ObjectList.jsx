@@ -25,19 +25,45 @@ const ObjectList = createReactClass({
 
     getInitialState() {
         return {
-            openTab: null
+            openTab: null,
+            models: null,
+            images: null,
+            texts: null,
+            videos: null,
+            others: null
         };
     },
 
     getResources(objects, type) {
         let i;
+        let typeL = 0;
         const l = objects.length;
         let results = [];
         for (i = 0; i < l; i++) {
             if (String(objects[i].number.Type) === type) {
                 results.push(objects[i]);
+                typeL++;
             }
         }
+
+        switch (type) {
+            case 'IMAGE': this.setState({images: typeL});
+                break;
+
+            case 'TEXT': this.setState({texts: typeL});
+                break;
+
+            case 'VIDEO': this.setState({videos: typeL});
+                break;
+
+            case '3D': this.setState({models: typeL});
+                break;
+
+            case 'null': this.setState({others: typeL});
+                break;
+
+        }
+
         return results;
     },
 
@@ -89,8 +115,9 @@ const ObjectList = createReactClass({
                                         this.changeTab('IMAGE');
                                     }}>
                                     <span className={Styles["icon--types"]}><Icon
-                                        glyph={Icon.GLYPHS.image}/></span> Image Resources
-                                <span className={Styles["icon--tab"]}><Icon glyph={this.state.openTab === 'IMAGE' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                                        glyph={Icon.GLYPHS.image}/></span> Image Resources ({this.state.images})
+                                <span className={Styles["icon--tab"]}><Icon
+                                    glyph={this.state.openTab === 'IMAGE' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
                             </button>
                         </li>
                         {this.state.openTab === 'IMAGE' ?
@@ -106,9 +133,10 @@ const ObjectList = createReactClass({
                                         this.changeTab('VIDEO');
                                     }}>
                                     <span className={Styles["icon--types"]}><Icon
-                                        glyph={Icon.GLYPHS.video}/></span> Video Resources
+                                        glyph={Icon.GLYPHS.video}/></span> Video Resources ({this.state.videos})
 
-                                <span className={Styles["icon--tab"]}><Icon glyph={this.state.openTab === 'VIDEO' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                                <span className={Styles["icon--tab"]}><Icon
+                                    glyph={this.state.openTab === 'VIDEO' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
                             </button>
                         </li>
 
@@ -125,9 +153,10 @@ const ObjectList = createReactClass({
                                         this.changeTab('MODEL');
                                     }}>
                                 <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.model}/></span> 3D
-                                Resources
+                                Resources ({this.state.models})
 
-                                <span className={Styles["icon--tab"]}><Icon glyph={this.state.openTab === 'MODEL' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                                <span className={Styles["icon--tab"]}><Icon
+                                    glyph={this.state.openTab === 'MODEL' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
                             </button>
                         </li>
 
@@ -144,9 +173,10 @@ const ObjectList = createReactClass({
                                         this.changeTab('TEXT');
                                     }}>
                                 <span className={Styles["icon--types"]}><Icon glyph={Icon.GLYPHS.text}/></span> Text
-                                Resources
+                                Resources ({this.state.texts})
 
-                                <span className={Styles["icon--tab"]}><Icon glyph={this.state.openTab === 'TEXT' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                                <span className={Styles["icon--tab"]}><Icon
+                                    glyph={this.state.openTab === 'TEXT' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
                             </button>
                         </li>
 
@@ -164,9 +194,10 @@ const ObjectList = createReactClass({
                                     }}>
                                 <span className={Styles["icon--types"]}><Icon
                                     glyph={Icon.GLYPHS.radioOff}/></span> Other
-                                Resources
+                                Resources ({this.state.others})
 
-                                <span className={Styles["icon--tab"]}><Icon glyph={this.state.openTab === 'OTHER' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
+                                <span className={Styles["icon--tab"]}><Icon
+                                    glyph={this.state.openTab === 'OTHER' ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/></span>
                             </button>
                         </li>
 

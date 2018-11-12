@@ -3,6 +3,7 @@ import createReactClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import ko from 'terriajs-cesium/Source/ThirdParty/knockout';
+import Icon from '../Icon.jsx';
 
 import ObserveModelMixin from '../ObserveModelMixin';
 import InteractionTabs from './InteractionTabs.jsx';
@@ -113,7 +114,7 @@ const InteractionWindow = createReactClass({
                             className={Styles.btnCloseModal}
                             title="Close data panel"
                             data-target="close-modal">
-                        X
+                        <span className={Styles["icon--close"]}><Icon glyph={Icon.GLYPHS.close}/></span>
                     </button>
                     <InteractionTabs terria={this.props.terria} viewState={this.props.viewState}/>
                 </div>

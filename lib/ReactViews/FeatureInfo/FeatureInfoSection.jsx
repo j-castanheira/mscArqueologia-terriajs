@@ -190,6 +190,52 @@ const FeatureInfoSection = createReactClass({
         });
     },
 
+    getIcon()
+    {
+        let icon,type;
+        const typeTry = this.props.feature._properties._Type;
+        if(typeTry !== undefined)
+        type = typeTry._value;
+        console.log("FEATURE",this.props.feature);
+        switch (type) {
+            case 'IMAGE': icon = Icon.GLYPHS.image;
+                break;
+
+            case 'TEXT': icon = Icon.GLYPHS.text;
+                break;
+
+            case 'VIDEO': icon = Icon.GLYPHS.video;
+                break;
+
+            case '3D': icon = Icon.GLYPHS.model;
+                break;
+
+            case 'OTHER': icon = Icon.GLYPHS.radioOff;
+                break;
+
+        }
+        return icon;
+    },
+
+    getColor()
+    {
+        let color;
+        const billboard = this.props.feature.billboard;
+        const point = this.props.feature.point;
+
+        if(point !== undefined)
+        {
+          color = point._color._value;
+        }
+
+        if(billboard !== undefined)
+        {
+            color = billboard._color._value;
+        }
+
+        return color;
+    },
+
     render() {
         const catalogItemName = (this.props.catalogItem && this.props.catalogItem.name) || '';
         let baseFilename = catalogItemName;
@@ -206,16 +252,27 @@ const FeatureInfoSection = createReactClass({
         }
         const fullName = (catalogItemName ? (catalogItemName + ' - ') : '') + this.renderDataTitle();
         const reactInfo = getInfoAsReactComponent(this);
+        //EDITED
+        const iconId = this.getIcon();
+        const color = this.getColor();
+        const styles = {
+            width: '100%',
+            height: '5px',
+            backgroundColor: 'rgb(' + String(color['red']*255) + ',' + String(color['green']*255) + ',' + String(color['blue']*255) + ')',
+        };
 
         return (
             <li className={classNames(Styles.section)}>
+                <div className="color-box" style={styles}></div>
                 <If condition={this.props.printView}>
                     <h2>{fullName}</h2>
                 </If>
                 <If condition={!this.props.printView}>
                     <button type='button' onClick={this.clickHeader} className={Styles.title}>
-                        <span>{fullName}</span>
-                        {this.props.isOpen ? <Icon glyph={Icon.GLYPHS.opened}/> : <Icon glyph={Icon.GLYPHS.closed}/>}
+                        <section>
+                        <span>{iconId !== undefined ? <span className={Styles['icon--types']}><Icon glyph={iconId}/></span> : ''}{fullName}</span>
+                            <span className={Styles['icon--open']}>{this.props.isOpen ? <Icon glyph={Icon.GLYPHS.opened}/> : <Icon glyph={Icon.GLYPHS.closed}/>}</span>
+                        </section>
                     </button>
                 </If>
                 <If condition={this.props.isOpen}>

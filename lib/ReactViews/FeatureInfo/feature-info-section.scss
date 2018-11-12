@@ -8,6 +8,29 @@
   border-top: 1px solid $dark-lighter;
 }
 
+.icon--types {
+  display: inline-block;
+  vertical-align: middle;
+  top: 5px;
+  margin-right: 5px;
+  svg {
+    height: 20px;
+    width: 20px;
+    fill: #fff;
+  }
+}
+
+.icon--open{
+  vertical-align: text-bottom;
+  float: right;
+  svg{
+    height: 20px;
+    width: 20px;
+    fill: #fff;
+    float: right;
+  }
+}
+
 .title{
   composes: btn from './feature-info-panel.scss';
   position: relative;
@@ -17,18 +40,8 @@
   margin: 0;
   padding-right: 30px;
   span{
-    display: block;
     font-weight: 300;
     font-size: $font-size-mid-small;
-  }
-  svg{
-    height: 20px;
-    width: 20px;
-    fill: #fff;
-    float: right;
-    position: absolute;
-    top: 10px;
-    right: 5px;
   }
 }
 

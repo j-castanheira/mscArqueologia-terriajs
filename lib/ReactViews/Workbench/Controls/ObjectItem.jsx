@@ -37,15 +37,14 @@ const ObjectItem = createReactClass({
         var result = new PickedFeatures();
         result.isLoading = false;
         result.features.push(fakeFeature);
+
         /**
          console.log("VIEWER",terria.currentViewer);
          console.log("DATASOURCE", this.props.list.props.item.dataSource._entityCollection);
          console.log("OBJECT",this.props.object);
          console.log("Id",objectId);
          console.log("SELECTED ENTITY",fakeFeature);
-         **/
-
-        console.log("DATA", this.props.list.props.item);
+        console.log("DATA", this.props.list.props.item);**/
 
         if (this.props.object.number.Longitude !== "NA") {
             // Wait for some seconds and then open the feature information

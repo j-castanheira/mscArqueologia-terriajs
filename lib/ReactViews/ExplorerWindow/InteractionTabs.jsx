@@ -49,7 +49,7 @@ const InteractionTabs = createReactClass({
                 title: 'information',
                 category: 'information',
                 tab: 1,
-                icon: Icon.GLYPHS.menu,
+                icon: Icon.GLYPHS.text,
                 panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
                                        items={this.props.viewState.currentItem}
@@ -81,7 +81,7 @@ const InteractionTabs = createReactClass({
                             <button type='button'
                                     onClick={this.activateTab.bind(this, item.tab)}
                                     className={classNames(Styles.btnTab, {[Styles.btnSelected]: item === currentTab})}>
-                                <span className={Styles.iconDiscover}><Icon glyph={item.icon}/></span> {item.name}
+                                <span className={Styles['icon--discover']}><Icon glyph={item.icon}/></span> {item.name}
                             </button>
                         </li>
                     </For>

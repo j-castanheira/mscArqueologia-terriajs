@@ -70,3 +70,14 @@
     content: '';
   }
 }
+
+.icon--close {
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin: 0px;
+  svg {
+    height: 20px;
+    width: 20px;
+    fill: $color-primary;
+  }
+}

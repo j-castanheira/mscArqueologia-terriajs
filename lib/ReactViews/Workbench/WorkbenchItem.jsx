@@ -28,6 +28,8 @@ import ViewingControls from './Controls/ViewingControls';
 import Styles from './workbench-item.scss';
 import Icon from '../Icon.jsx';
 
+var Color = require('terriajs-cesium/Source/Core/Color');
+
 const WorkbenchItem = createReactClass({
     displayName: 'WorkbenchItem',
     mixins: [ObserveModelMixin],
@@ -40,6 +42,12 @@ const WorkbenchItem = createReactClass({
         item: PropTypes.object.isRequired,
         viewState: PropTypes.object.isRequired,
         setWrapperState: PropTypes.func
+    },
+
+    getInitialState() {
+        return {
+            entityColor: [],
+        };
     },
 
     toggleDisplay() {
@@ -58,8 +66,27 @@ const WorkbenchItem = createReactClass({
         this.props.item.isShown = !this.props.item.isShown;
     },
 
+    componentDidMount() {
+        const workbenchItem = this.props.item;
+        let colorArray;
+        let color = [];
+        if(workbenchItem._dataSource !== undefined)
+        {
+            if(workbenchItem._dataSource._legendHelper !== undefined) {
+                colorArray = workbenchItem._dataSource._legendHelper._noColumnColorArray;
+                color = Color.fromBytes(colorArray[0], colorArray[1], colorArray[2], colorArray[3]);
+            }
+        }
+
+        this.setState({
+            entityColor: color
+        });
+
+    },
+
     render() {
         const workbenchItem = this.props.item;
+        const datasource = workbenchItem._dataSource;
         /**
         if(workbenchItem._dataSource !== undefined) {
             if(workbenchItem._dataSource._legendHelper !== undefined) {
@@ -68,13 +95,21 @@ const WorkbenchItem = createReactClass({
                 console.log(itemColor);
             }
         }**/
-        //Edited: disables the usual information for data and enable cultural heritage object oriented information
+        // Edited: disables the usual information for data and enable cultural heritage object oriented information
 
-        if(workbenchItem.type == 'object-csv')
+        if(workbenchItem.type === 'object-csv'){
+            const styles = {
+                margin: '0px',
+                width: '100%',
+                height: '5px',
+                backgroundColor: 'rgb(' + String(this.state.entityColor['red']*255) + ',' + String(this.state.entityColor['green']*255) + ',' + String(this.state.entityColor['blue']*255) + ')',
+            };
+
         return (
             <li
                 style={this.props.style}
                 className={classNames(this.props.className, Styles.workbenchItem,{[Styles.isOpen]: workbenchItem.isLegendVisible})}>
+                <div className="color-box" style={styles}></div>
                 <ul className={Styles.header}>
                     <If condition={workbenchItem.supportsToggleShown}>
                         <li className={Styles.visibilityColumn}>
@@ -92,6 +127,7 @@ const WorkbenchItem = createReactClass({
                             onTouchStart={this.props.onTouchStart}
                             className={Styles.draggable}
                             title={getAncestors(workbenchItem).map(member => member.nameInCatalog).concat(workbenchItem.nameInCatalog).join(' → ')}>
+
                             <If condition={!workbenchItem.isMappable}>
                                 <span className={Styles.iconLineChart}><Icon glyph={Icon.GLYPHS.lineChart}/></span>
                             </If>
@@ -120,6 +156,7 @@ const WorkbenchItem = createReactClass({
                 </If>
             </li>
         );
+        }
 
         return (
             <li
