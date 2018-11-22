@@ -72,6 +72,7 @@
   border: 0;
   border-radius: $radius-small;
   &:hover, &--hover {
-    background: get-hover-color($color-primary);
+    background: darken($color-primary,10%);
+    outline: none;
   }
 }

@@ -38,7 +38,7 @@ $btn-setting-size: 35px;
 .btn-small {
   padding: 0;
   &:hover, &:focus {
-    color: $color-primary;
+    color: #99B2B6;
   }
 }
 
@@ -54,7 +54,8 @@ $btn-setting-size: 35px;
   padding: $padding;
 
   &:hover, &--hover {
-    background: get-hover-color($color-primary);
+    background: darken($color-primary,10%);
+    color: $text-light;
   }
 }
 
@@ -86,8 +87,8 @@ $btn-setting-size: 35px;
   border-radius: 4px;
 
   &:hover, &:focus {
-    border: 2px solid get-hover-color($color-primary);
-    color: get-hover-color($color-primary);
+    border: 2px solid $color-primary-light;
+    color: #99B2B6;
   }
 }
 
@@ -100,7 +101,7 @@ $btn-setting-size: 35px;
 
   &:hover, &:focus {
     border: 2px solid $color-primary;
-    color: $color-primary;
+    color: #99B2B6;
   }
 }
 
@@ -231,6 +232,7 @@ $btn-setting-size: 35px;
   &.is-active {
     background: $color-primary;
     text-decoration: none;
+    outline: none;
   }
   svg{
     height: 15px;
@@ -258,7 +260,7 @@ $btn-setting-size: 35px;
 .btn--radio {
   padding: $padding-small;
   &:before {
-    color: $color-primary;
+    color: $text-light;
     display: inline-block;
     padding: $padding-small $padding-small $padding-small 0;
   }

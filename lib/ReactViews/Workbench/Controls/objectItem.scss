@@ -7,14 +7,15 @@
   font-family: $font-base;
   box-shadow: none;
   display: inline;
-  background: $color-secondary;
+  background: #AC3E27;
   color: $text-light;
   text-align: left;
   width: 100%;
   border: 0;
   border-radius: $radius-small;
   &:hover, &--hover {
-    background: get-hover-color($color-primary);
+    background: #DE6141 ;
+    outline: none;
   }
 }
 

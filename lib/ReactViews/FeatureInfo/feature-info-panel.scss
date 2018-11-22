@@ -84,7 +84,7 @@
   &:hover,
   &:focus {
     svg{
-      fill: $color-primary;
+      fill: $color-primary-dark;
     }
   }
   svg{
@@ -128,7 +128,7 @@
 
   &:hover {
     svg{
-      fill: $color-primary;
+      fill: $color-primary-dark;
     }
   }
   svg{
@@ -142,6 +142,6 @@
   composes: btn-location;
 
   svg{
-    fill: $color-primary;
+    fill: $color-primary-dark;
   }
 }

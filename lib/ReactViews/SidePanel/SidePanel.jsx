@@ -89,7 +89,7 @@ const SidePanel = createReactClass({
                                onDoSearch={this.search}
                                onFocus={this.startLocationSearch}
                                searchText={searchState.locationSearchText}
-                               placeholder="Search for locations" />
+                               placeholder="Search for locations/objects" />
                     <div className={Styles.addData}>
                         <button type='button' onClick={this.onAddDataClicked} className={Styles.button}>
                             <Icon glyph={Icon.GLYPHS.add}/>Add data
@@ -110,13 +110,13 @@ const SidePanel = createReactClass({
                         </When>
                         <Otherwise>
                             <div className={Styles.workbenchEmpty}>
-                                <div>Your workbench is empty</div>
-                                <p><strong>Click &apos;Add data&apos; above to:</strong></p>
+                                <div>Your panel is empty</div>
+                                <p><strong>Click &apos;Add Data&apos; above to:</strong></p>
                                 <ul>
                                     <li>Browse the Data Catalogue</li>
-                                    <li>Load your own data onto the map</li>
+                                    <li>Load object lists or your own data onto the map</li>
                                 </ul>
-                                <p><Icon glyph={Icon.GLYPHS.bulb}/><strong>TIP:</strong> <em>All your active data sets will be listed
+                                <p><Icon glyph={Icon.GLYPHS.bulb}/><strong>TIP:</strong> <em>All your active lists will be listed
                                     here</em></p>
                             </div>
                         </Otherwise>
