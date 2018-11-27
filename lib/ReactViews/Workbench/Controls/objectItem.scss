@@ -7,14 +7,14 @@
   font-family: $font-base;
   box-shadow: none;
   display: inline;
-  background: #AC3E27;
+  background: $dark-lighter;
   color: $text-light;
   text-align: left;
   width: 100%;
   border: 0;
   border-radius: $radius-small;
   &:hover, &--hover {
-    background: #DE6141 ;
+    background: #70a9a1;
     outline: none;
   }
 }

@@ -11,11 +11,12 @@ const UploadButton = createReactClass({
     mixins: [ObserveModelMixin],
 
     propTypes: {
-        terria: PropTypes.object
+        terria: PropTypes.object,
+        viewstate: PropTypes.object
     },
 
     handleClick() {
-        console.log("upload");
+        this.props.viewstate.openForm();
     },
 
     render() {

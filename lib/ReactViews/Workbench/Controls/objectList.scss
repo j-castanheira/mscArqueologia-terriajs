@@ -72,7 +72,7 @@
   border: 0;
   border-radius: $radius-small;
   &:hover, &--hover {
-    background: darken($color-primary,10%);
+    background: $color-secondary;
     outline: none;
   }
 }

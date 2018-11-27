@@ -54,7 +54,7 @@ $btn-setting-size: 35px;
   padding: $padding;
 
   &:hover, &--hover {
-    background: darken($color-primary,10%);
+    background: #46BFBA;
     color: $text-light;
   }
 }
@@ -87,8 +87,8 @@ $btn-setting-size: 35px;
   border-radius: 4px;
 
   &:hover, &:focus {
-    border: 2px solid $color-primary-light;
-    color: #99B2B6;
+    border: 2px solid $color-secondary;
+    color: $color-secondary;
   }
 }
 
@@ -101,7 +101,7 @@ $btn-setting-size: 35px;
 
   &:hover, &:focus {
     border: 2px solid $color-primary;
-    color: #99B2B6;
+    color: $color-secondary
   }
 }
 
@@ -230,7 +230,7 @@ $btn-setting-size: 35px;
   &:focus,
   .is-open &,
   &.is-active {
-    background: $color-primary;
+    background: $color-secondary;
     text-decoration: none;
     outline: none;
   }

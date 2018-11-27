@@ -7,24 +7,24 @@ $font-mono: monospace, sans-serif;
 $font-feature-info: $font-mono;
 $font : $font-base;
 
-$color-primary: #DE6141;
+$color-primary: #40798c;
 @function get-hover-color($base-color) {@return lighten($base-color, 10%);}
-$color-secondary: #AC3E27;
+$color-secondary: #46BFBA;
 
 $animation-fast: 0.1s;
 
-$dark: darken(#99B2B6,100%);
-$dark-with-overlay:darken(#99B2B6,80%);
-$dark-lighter: darken(#99B2B6,20%);
-$grey: darken(#99B2B6,50%);
+$dark: #0b2027;
+$dark-with-overlay:darken(#0b2027,40%);
+$dark-lighter: darken(#0b2027,20%);
+$grey: darken(#0b2027,50%);
 $grey-lighter: #ddd;
 $field-border: #ddd;
 $overlay: rgba(255, 255, 255, 0.15);
 
-$text-black: #11111D;
-$text-dark: darken(#99B2B6,80%);
+$text-black: #0b2027;
+$text-dark: darken(#40798c,80%);
 $text-light: #FFFFFF;
-$text-light-dimmed: #99B2B6;
+$text-light-dimmed: #cfd7c7;
 
 // You can override these functions to change the link color depending on the background, eg.
 // @function get-link-color($bg-color) {
@@ -39,7 +39,7 @@ $text-light-dimmed: #99B2B6;
   @if variable-exists(text-link) {
   	@return $text-link;
   }
-  @return #AC3E27;
+  @return #0b2027;
 }
 @function get-visited-link-color($bg-color) {
   @if variable-exists(text-visited-link) {
@@ -49,8 +49,8 @@ $text-light-dimmed: #99B2B6;
 }
 
 $faint-bg: #f5f5f5;
-$warning: #AC3E27;
-$info-color: #99B2B6;
+$warning: #40798c;
+$info-color: #cfd7c7;
 $link-text-decoration: none;
 
 $padding: 10px;
@@ -77,7 +77,7 @@ $modal-highlight: $color-primary;
 $modal-border: $grey-lighter;
 $modal-content-height: 70vh;
 $modal-header-height: $btn-default-line-height + $padding*2;
-$dropdown-hover-color: #AC3E27;
+$dropdown-hover-color: #cfd7c7;
 
 $data-catalog-color: $text-black;
 
@@ -149,8 +149,8 @@ $chart-line-color: #ccc;
 $chart-preview-line-color: $chart-line-color;
 $chart-darker: darken($dark, 8%);
 
-$charcoal-grey: #99B2B6;
-$turquoise-blue: #DE6141;
+$charcoal-grey: #cfd7c7;
+$turquoise-blue: #46BFBA;
 
 // Splitter
 $splitter-thumb-width: 40px;

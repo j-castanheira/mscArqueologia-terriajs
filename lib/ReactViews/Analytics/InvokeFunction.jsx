@@ -67,7 +67,7 @@ const InvokeFunction = createReactClass({
                         {this.getParams()}
                     </div>
                     <div className={Styles.footer}>
-                        <button type='button' className={Styles.btn} onClick={this.submit}>Run Analysis</button>
+                        <button type='button' className={Styles.btn} onClick={this.submit}>Run Search</button>
                     </div>
                 </div>);
     },
