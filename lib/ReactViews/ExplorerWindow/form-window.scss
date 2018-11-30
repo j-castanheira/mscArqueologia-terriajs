@@ -1,0 +1,130 @@
+@import '~terriajs-variables';
+@import '../../Sass/common/mixins';
+
+.modal-wrapper {
+  position: fixed;
+  z-index: $front-component-z-index - 1;
+  padding-left: $padding*2;
+  padding-right: 80px;
+  padding-top: calc((100vh - #{$modal-content-height} - #{$modal-header-height}) / 2);
+  padding-bottom: calc((100vh - #{$modal-content-height} - #{$modal-header-height}) / 2);
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 30%;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: $md) {
+    padding-left: 30px + $work-bench-width;
+    padding-right: 30px;
+  }
+
+  h3 {
+    margin: 1em 0;
+  }
+}
+
+.explorer-panel {
+  position: relative;
+  background: $modal-bg;
+  color: $modal-text;
+  border-radius: 20px;
+  box-shadow: 0 0 15px 6px rgba(100, 100, 100, 0.3);
+  z-index: $front-component-z-index - 1;
+  height: 80%;
+
+  @include transform(translateY(20%));
+  opacity: 0;
+  @include transition(all 0.3s);
+
+  &.is-mounted {
+    opacity: 1;
+    @include transform(none);
+  }
+  a{
+    @include link($modal-bg);
+  }
+
+  h3 {
+    margin: 1em 0;
+  }
+}
+
+.modal-overlay {
+  composes: sm-show from '../../Sass/common/_base.scss';
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: $front-component-z-index - 10;
+  opacity: 1;
+  visibility: visible;
+}
+
+.btn--close-modal {
+  composes: sm-show from '../../Sass/common/_base.scss';
+  composes: btn from '../../Sass/common/_buttons.scss';
+  composes: btn-transparent from '../../Sass/common/_buttons.scss';
+  composes: btn--secondary from '../../Sass/common/_buttons.scss';
+
+  font-size: $font-size-mid-mini;
+  border-radius: 20px;
+  padding: 4px 10px;
+  margin: 5px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+  &:before {
+    content: '';
+  }
+}
+
+.icon--close {
+  display: inline-block;
+  vertical-align: text-bottom;
+  margin: 0px;
+  svg {
+    height: 20px;
+    width: 20px;
+    fill: $color-primary;
+  }
+}
+
+.panel-content {
+  composes: clearfix from '../../Sass/common/_base.scss';
+  position: relative;
+  background: $modal-bg;
+  color: $modal-text;
+  height: 90%;
+  overflow: hidden;
+  border-radius: 20px;
+  top: 0px;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+.footer{
+  position: relative;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  background: $modal-bg;
+  padding: $padding-small;
+  border-radius: 20px;
+}
+
+.btn {
+  composes: btn from '../../Sass/common/_buttons.scss';
+  composes: btn-primary from '../../Sass/common/_buttons.scss';
+  border-radius: 20px;
+}
+
+.field {
+  composes: field from '../../Sass/common/_form.scss';
+  margin-bottom: $padding;
+}

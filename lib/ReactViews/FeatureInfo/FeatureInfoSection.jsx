@@ -22,8 +22,11 @@ import Icon from '../Icon.jsx';
 import ObserveModelMixin from '../ObserveModelMixin';
 import propertyGetTimeValues from '../../Core/propertyGetTimeValues';
 import parseCustomMarkdownToReact from '../Custom/parseCustomMarkdownToReact';
+import repositoryId from '../../Models/RepositoryIdJsonCatalogFunction';
 
 import Styles from './feature-info-section.scss';
+import when from "terriajs-cesium/Source/ThirdParty/when";
+import TerriaError from "../../Core/TerriaError";
 
 // We use Mustache templates inside React views, where React does the escaping; don't escape twice, or eg. " => &quot;
 Mustache.escape = function(string) {
@@ -44,6 +47,33 @@ const FeatureInfoSection = createReactClass({
         isOpen: PropTypes.bool,
         onClickHeader: PropTypes.func,
         printView: PropTypes.bool
+    },
+
+    createRelated()
+    {
+        let items = this.props.catalogItem.json;
+        let id = this.props.feature.properties._Id._value;
+        //console.log("JSON",items[id]);
+        //console.log(this.props.viewState.terria);
+        var func = new repositoryId(this.props.viewState.terria);
+        //this.props.viewState.viewCatalogMember(func);
+       //items[id].relationsByFields;
+        //var promise = func.invoke();
+
+        //DESLIGAR INFOSECTION
+        try {
+            const promise = when(func.invoke())
+                .otherwise(terriaError => {
+                    console.log("ERROR")
+                });
+
+            return promise;
+        } catch (e) {
+            if (e instanceof TerriaError) {
+                console.log("ERROR")
+            }
+            return undefined;
+        }
     },
 
     openInteractionWindow()
@@ -320,7 +350,7 @@ const FeatureInfoSection = createReactClass({
                                 {this.state.showRawData ? 'Show Curated Data' : 'Show Raw Data'}
                             </button>
                         </If>
-                        <button type="button" className={Styles.rawDataButton} onClick={this.openInteractionWindow}>
+                        <button type="button" className={Styles.rawDataButton} onClick={this.createRelated}>
                             <span className={Styles.iconRelated}><Icon glyph={Icon.GLYPHS.showMore}/></span> Related Resources
                         </button>
                         <button type="button" className={Styles.rawDataButton2} onClick={this.openInteractionWindow}>
