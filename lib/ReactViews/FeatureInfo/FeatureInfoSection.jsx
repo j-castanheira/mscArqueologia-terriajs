@@ -266,6 +266,21 @@ const FeatureInfoSection = createReactClass({
         return color;
     },
 
+
+    hasRelated()
+    {
+        let items = this.props.catalogItem.json;
+        let id = this.props.feature.properties._Id._value;
+        return defined(items[id].relationsByFields);
+    },
+
+    hasResources()
+    {
+        let items = this.props.catalogItem.json;
+        let id = this.props.feature.properties._Id._value;
+        return defined(items[id].resources);
+    },
+
     render() {
         const catalogItemName = (this.props.catalogItem && this.props.catalogItem.name) || '';
         let baseFilename = catalogItemName;
@@ -285,6 +300,8 @@ const FeatureInfoSection = createReactClass({
         //EDITED
         const iconId = this.getIcon();
         const color = this.getColor();
+        const hasRelated = this.hasRelated();
+        const hasResources = this.hasResources();
         const styles = {
             width: '100%',
             height: '5px',
@@ -350,12 +367,12 @@ const FeatureInfoSection = createReactClass({
                                 {this.state.showRawData ? 'Show Curated Data' : 'Show Raw Data'}
                             </button>
                         </If>
-                        <button type="button" className={Styles.rawDataButton} onClick={this.createRelated}>
+                        {hasRelated ?  <button type="button" className={Styles.rawDataButton} onClick={this.createRelated}>
                             <span className={Styles.iconRelated}><Icon glyph={Icon.GLYPHS.showMore}/></span> Related Resources
-                        </button>
-                        <button type="button" className={Styles.rawDataButton2} onClick={this.openInteractionWindow}>
+                        </button> : ""}
+                        {hasResources ? <button type="button" className={Styles.rawDataButton2} onClick={this.openInteractionWindow}>
                             <span className={Styles.iconDiscover}><Icon glyph={Icon.GLYPHS.search}/></span> Discover More
-                        </button>
+                        </button> : ""}
                     </div>
                     </section>
                 </If>

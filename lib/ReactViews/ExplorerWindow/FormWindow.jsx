@@ -7,6 +7,9 @@ import ko from 'terriajs-cesium/Source/ThirdParty/knockout';
 import ObserveModelMixin from '../ObserveModelMixin';
 
 import Styles from './form-window.scss';
+import defined from "terriajs-cesium/Source/Core/defined";
+import CesiumMath from "terriajs-cesium/Source/Core/Math";
+import Ellipsoid from "terriajs-cesium/Source/Core/Ellipsoid";
 
 const SLIDE_DURATION = 300;
 
@@ -29,7 +32,7 @@ const FormWindow = createReactClass({
             locationValue: "",
             latitudeValue: "",
             longitudeValue: "",
-            typeValue: "",
+            typeValue: "IMAGE",
             resourceValue: ""
         };
     },
@@ -64,7 +67,53 @@ const FormWindow = createReactClass({
         }
     },
 
+    getCoordinates(){
+        //GET LATITUDE AND LONGITUDE FROM MOUSE CLICK
+        const terria = this.props.terria;
+        let position;
+        if (defined(terria.selectedFeature) && defined(terria.selectedFeature.position)) {
+            // If the clock is avaliable then use it, otherwise don't.
+            let clock;
+            if (defined(terria.clock)) {
+                clock = terria.clock.currentTime;
+            }
+
+            // If there is a selected feature then use the feature location.
+            position = terria.selectedFeature.position.getValue(clock);
+
+        }
+        if (!defined(position)) {
+            // Otherwise use the location picked.
+            if (defined(terria.pickedFeatures) && defined(terria.pickedFeatures.pickPosition)) {
+                position = terria.pickedFeatures.pickPosition;
+            }
+        }
+
+        let catographic,latitude,longitude;
+
+        if(defined(position))
+            catographic = Ellipsoid.WGS84.cartesianToCartographic(position);
+        if(defined(catographic))
+        {
+            latitude = CesiumMath.toDegrees(catographic.latitude);
+            longitude = CesiumMath.toDegrees(catographic.longitude);
+        }
+        else
+        {
+            latitude = "";
+            longitude = "";
+        }
+        // Set fields to the mouse previous click position
+        this.setState({
+            longitudeValue: longitude,
+            latitudeValue: latitude
+        });
+    },
+
     slideIn() {
+
+        this.getCoordinates();
+
         this.props.viewState.formPanelAnimating = true;
 
         this.setState({
@@ -108,6 +157,42 @@ const FormWindow = createReactClass({
         this.setState({
             [name]: value
         });
+    },
+
+    handleSelectChange(event) {
+        const target = event.target;
+        const value = target.value;
+
+        this.setState({
+            typeValue: value
+        });
+    },
+
+    submit() {
+        /** FOR STORING PERSONAL OBJECTS ON CSV FILE
+        const rows = this.props.viewState.personalObjects.split("\n");
+        const nRows = rows.length-1;
+        const row = nRows + ",\"" + this.state.titleValue + "\",\"" + this.state.creatorValue + "\",\"" + this.state.descriptionValue + "\",\"" + this.state.dateValue + "\",\"" + this.state.locationValue + "\"," + this.state.latitudeValue + "," + this.state.latitudeValue + "," + this.state.resourceValue + "," + this.state.typeValue + ",Personal,-,-\n";
+        this.props.viewState.addPersonalObject(row);
+        console.log(this.props.viewState.personalObjects);**/
+
+        let jsonFile = this.props.viewState.personalObjects;
+        jsonFile.count += 1;
+        jsonFile.results.push(
+            {
+                dcTitle: [{text: [this.state.titleValue], language: "def"}],
+                dcCreator: [{text: [this.state.creatorValue], language: "def"}],
+                dcDescription: [{text: [this.state.descriptionValue], language: "def"}],
+                dcDate: [{text: [this.state.dateValue], language: "def"}],
+                locations: [{id: 1, name: [{text: [this.state.locationValue], language: "def"}], coordinates: [{latitude: this.state.latitudeValue, longitude: this.state.longitudeValue}]}],
+                resources: [{type: this.state.typeValue, url:this.state.resourceValue}],
+                sourceRepositorie: ["Personal"],
+                sourcePage: [""],
+                sourceData: [""]
+            }
+        );
+    console.log(jsonFile);
+    this.props.viewState.addPersonalObject(jsonFile);
     },
 
     render() {
@@ -200,7 +285,7 @@ const FormWindow = createReactClass({
                             <label><b> Type of resource </b>
                                 <select className={Styles.field}
                                        value={this.state.typeValue}
-                                       onChange={this.handleChange}
+                                       onChange={this.handleSelectChange}
                                        name="typeValue">
                                 <option value="IMAGE">Image</option>
                                 <option value="VIDEO">Video</option>
