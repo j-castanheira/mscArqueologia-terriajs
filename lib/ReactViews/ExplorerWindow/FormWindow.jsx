@@ -33,7 +33,8 @@ const FormWindow = createReactClass({
             latitudeValue: "",
             longitudeValue: "",
             typeValue: "IMAGE",
-            resourceValue: ""
+            resourceValue: "",
+            doneSubmit: false
         };
     },
 
@@ -134,7 +135,8 @@ const FormWindow = createReactClass({
         });
         setTimeout(() => {
             this.setState({
-                visible: false
+                visible: false,
+                doneSubmit: false
             });
         }, SLIDE_DURATION);
     },
@@ -176,7 +178,7 @@ const FormWindow = createReactClass({
         this.props.viewState.addPersonalObject(row);
         console.log(this.props.viewState.personalObjects);**/
 
-        let jsonFile = this.props.viewState.personalObjects;
+        let jsonFile = this.props.terria.personalObjects;
         jsonFile.count += 1;
         jsonFile.results.push(
             {
@@ -184,6 +186,7 @@ const FormWindow = createReactClass({
                 dcCreator: [{text: [this.state.creatorValue], language: "def"}],
                 dcDescription: [{text: [this.state.descriptionValue], language: "def"}],
                 dcDate: [{text: [this.state.dateValue], language: "def"}],
+                dcType: [{text: [this.state.typeValue], language: "def"}],
                 locations: [{id: 1, name: [{text: [this.state.locationValue], language: "def"}], coordinates: [{latitude: this.state.latitudeValue, longitude: this.state.longitudeValue}]}],
                 resources: [{type: this.state.typeValue, url:this.state.resourceValue}],
                 sourceRepositorie: ["Personal"],
@@ -192,7 +195,13 @@ const FormWindow = createReactClass({
             }
         );
     console.log(jsonFile);
-    this.props.viewState.addPersonalObject(jsonFile);
+    this.props.terria.personalObjects = jsonFile;
+    console.log("PEROSNAL", this.props.terria.personalObjects);
+
+        this.setState({
+            doneSubmit: true
+        });
+
     },
 
     render() {
@@ -220,7 +229,9 @@ const FormWindow = createReactClass({
                         X
                     </button>
                     <h3 className={Styles.h3}> <p style={divStyle}>Submit an object</p></h3>
-                    <div className={Styles.panelContent}>
+                    {this.state.doneSubmit ? <div className={Styles.submitedContent}> <center><h2>{this.state.titleValue} </h2><br></br><h3 className={Styles.h3}>is submited!</h3></center></div>
+                            :
+                            <div className={Styles.panelContent}>
                             <label><b> Title </b>
                                 <input className={Styles.field}
                                        type="text"
@@ -290,6 +301,7 @@ const FormWindow = createReactClass({
                                 <option value="IMAGE">Image</option>
                                 <option value="VIDEO">Video</option>
                                 <option value="3D">3D Model</option>
+                                    <option value="TEXT">Text</option>
                                 <option value="OTHER">Other</option>
                                 </select>
                             </label>
@@ -305,7 +317,7 @@ const FormWindow = createReactClass({
                         <div className={Styles.footer}>
                             <button type='button' className={Styles.btn} onClick={this.submit}>Submit Object</button>
                         </div>
-                    </div>
+                    </div>}
                 </div>
             </div>
         ) : null;

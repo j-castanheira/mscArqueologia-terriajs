@@ -107,6 +107,19 @@
   overflow-y: auto;
 }
 
+.submited-content {
+  composes: clearfix from '../../Sass/common/_base.scss';
+  position: relative;
+  background: $color-secondary;
+  color: $modal-bg;
+  height: 90%;
+  border-radius: 0px;
+  top: 0px;
+  padding: 18px;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
 .footer{
   position: relative;
   left: 0;
