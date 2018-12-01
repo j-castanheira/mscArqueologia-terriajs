@@ -241,13 +241,13 @@ const InformationPreview = createReactClass({
     },
 
     getVideo() {
-        var url = String(this.state.images[1]);
+        var url = String(this.state.images[0]);
         var id = url.split('=');
         return id[1];
     },
 
     getModel() {
-        var url = String(this.state.images[1]);
+        var url = String(this.state.images[0]);
         var id = url.split('/');
         var l = id.length;
         console.log("MODEL", id[l - 1]);
@@ -299,10 +299,11 @@ const InformationPreview = createReactClass({
         return (
             <div className={Styles.preview}>
                 <div className={Styles.root}>
+                    {repository !== 'Personal' ?
                     <button type='button' onClick={this.goSourcePage}
                             className={Styles.btnAdd}>
                         {'Visit ' + repository + ' page'}
-                    </button>
+                    </button> : ""}
                     <div className={Styles.previewedInfo}>
                         {type == "IMAGE" ? (
                             <div className={Styles.slideshow}>

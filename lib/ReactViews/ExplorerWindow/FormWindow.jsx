@@ -34,6 +34,7 @@ const FormWindow = createReactClass({
             longitudeValue: "",
             typeValue: "IMAGE",
             resourceValue: "",
+            previewValue: "",
             doneSubmit: false
         };
     },
@@ -68,7 +69,7 @@ const FormWindow = createReactClass({
         }
     },
 
-    getCoordinates(){
+    getCoordinates() {
         //GET LATITUDE AND LONGITUDE FROM MOUSE CLICK
         const terria = this.props.terria;
         let position;
@@ -90,17 +91,15 @@ const FormWindow = createReactClass({
             }
         }
 
-        let catographic,latitude,longitude;
+        let catographic, latitude, longitude;
 
-        if(defined(position))
+        if (defined(position))
             catographic = Ellipsoid.WGS84.cartesianToCartographic(position);
-        if(defined(catographic))
-        {
+        if (defined(catographic)) {
             latitude = CesiumMath.toDegrees(catographic.latitude);
             longitude = CesiumMath.toDegrees(catographic.longitude);
         }
-        else
-        {
+        else {
             latitude = "";
             longitude = "";
         }
@@ -172,11 +171,11 @@ const FormWindow = createReactClass({
 
     submit() {
         /** FOR STORING PERSONAL OBJECTS ON CSV FILE
-        const rows = this.props.viewState.personalObjects.split("\n");
-        const nRows = rows.length-1;
-        const row = nRows + ",\"" + this.state.titleValue + "\",\"" + this.state.creatorValue + "\",\"" + this.state.descriptionValue + "\",\"" + this.state.dateValue + "\",\"" + this.state.locationValue + "\"," + this.state.latitudeValue + "," + this.state.latitudeValue + "," + this.state.resourceValue + "," + this.state.typeValue + ",Personal,-,-\n";
-        this.props.viewState.addPersonalObject(row);
-        console.log(this.props.viewState.personalObjects);**/
+         const rows = this.props.viewState.personalObjects.split("\n");
+         const nRows = rows.length-1;
+         const row = nRows + ",\"" + this.state.titleValue + "\",\"" + this.state.creatorValue + "\",\"" + this.state.descriptionValue + "\",\"" + this.state.dateValue + "\",\"" + this.state.locationValue + "\"," + this.state.latitudeValue + "," + this.state.latitudeValue + "," + this.state.resourceValue + "," + this.state.typeValue + ",Personal,-,-\n";
+         this.props.viewState.addPersonalObject(row);
+         console.log(this.props.viewState.personalObjects);**/
 
         let jsonFile = this.props.terria.personalObjects;
         jsonFile.count += 1;
@@ -187,16 +186,23 @@ const FormWindow = createReactClass({
                 dcDescription: [{text: [this.state.descriptionValue], language: "def"}],
                 dcDate: [{text: [this.state.dateValue], language: "def"}],
                 dcType: [{text: [this.state.typeValue], language: "def"}],
-                locations: [{id: 1, name: [{text: [this.state.locationValue], language: "def"}], coordinates: [{latitude: this.state.latitudeValue, longitude: this.state.longitudeValue}]}],
-                resources: [{type: this.state.typeValue, url:this.state.resourceValue}],
+                locations: [{
+                    id: 1,
+                    name: [{text: [this.state.locationValue], language: "def"}],
+                    coordinates: [{latitude: this.state.latitudeValue, longitude: this.state.longitudeValue}]
+                }],
+                resources: [{type: "IMAGE", url: this.state.previewValue}, {
+                    type: this.state.typeValue,
+                    url: this.state.resourceValue
+                }],
                 sourceRepositorie: ["Personal"],
                 sourcePage: [""],
                 sourceData: [""]
             }
         );
-    console.log(jsonFile);
-    this.props.terria.personalObjects = jsonFile;
-    console.log("PEROSNAL", this.props.terria.personalObjects);
+        console.log(jsonFile);
+        this.props.terria.personalObjects = jsonFile;
+        console.log("PEROSNAL", this.props.terria.personalObjects);
 
         this.setState({
             doneSubmit: true
@@ -228,10 +234,13 @@ const FormWindow = createReactClass({
                             data-target="close-modal">
                         X
                     </button>
-                    <h3 className={Styles.h3}> <p style={divStyle}>Submit an object</p></h3>
-                    {this.state.doneSubmit ? <div className={Styles.submitedContent}> <center><h2>{this.state.titleValue} </h2><br></br><h3 className={Styles.h3}>is submited!</h3></center></div>
-                            :
-                            <div className={Styles.panelContent}>
+                    <h3 className={Styles.h3}><p style={divStyle}>Submit an object</p></h3>
+                    {this.state.doneSubmit ? <div className={Styles.submitedContent}>
+                            <center><h2>{this.state.titleValue} </h2><br></br><h3 className={Styles.h3}>is submited!</h3>
+                            </center>
+                        </div>
+                        :
+                        <div className={Styles.panelContent}>
                             <label><b> Title </b>
                                 <input className={Styles.field}
                                        type="text"
@@ -293,20 +302,29 @@ const FormWindow = createReactClass({
                                 />
                             </label>
 
+                            <label><b> Preview image (image url)</b>
+                                <input className={Styles.field}
+                                       type="text"
+                                       value={this.state.previewValue}
+                                       onChange={this.handleChange}
+                                       name="previewValue"
+                                />
+                            </label>
+
                             <label><b> Type of resource </b>
                                 <select className={Styles.field}
-                                       value={this.state.typeValue}
-                                       onChange={this.handleSelectChange}
-                                       name="typeValue">
-                                <option value="IMAGE">Image</option>
-                                <option value="VIDEO">Video</option>
-                                <option value="3D">3D Model</option>
+                                        value={this.state.typeValue}
+                                        onChange={this.handleSelectChange}
+                                        name="typeValue">
+                                    <option value="IMAGE">Image</option>
+                                    <option value="VIDEO">Video</option>
+                                    <option value="3D">3D Model</option>
                                     <option value="TEXT">Text</option>
-                                <option value="OTHER">Other</option>
+                                    <option value="OTHER">Other</option>
                                 </select>
                             </label>
 
-                            <label><b> Resource </b>
+                            <label><b> Resource (image,Youtube or Sketchfab url)</b>
                                 <input className={Styles.field}
                                        type="text"
                                        value={this.state.resourceValue}
@@ -314,10 +332,11 @@ const FormWindow = createReactClass({
                                        name="resourceValue"
                                 />
                             </label>
-                        <div className={Styles.footer}>
-                            <button type='button' className={Styles.btn} onClick={this.submit}>Submit Object</button>
-                        </div>
-                    </div>}
+                            <div className={Styles.footer}>
+                                <button type='button' className={Styles.btn} onClick={this.submit}>Submit Object
+                                </button>
+                            </div>
+                        </div>}
                 </div>
             </div>
         ) : null;
