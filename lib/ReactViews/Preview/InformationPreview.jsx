@@ -243,6 +243,7 @@ const InformationPreview = createReactClass({
     getVideo() {
         var url = String(this.state.images[0]);
         var id = url.split('=');
+        console.log("VIDEOURL",id[1]);
         return id[1];
     },
 
@@ -264,6 +265,7 @@ const InformationPreview = createReactClass({
     },
 
     render() {
+        console.log("RESOURECES",this.props.viewState.currentItem.resources);
         const previewed = this.props.previewed;
         const info = this.props.viewState.currentItem[previewed];
         const repository = this.props.viewState.currentItem.sourceRepositorie[0];

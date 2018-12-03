@@ -218,6 +218,10 @@ const FeatureInfoPanel = createReactClass({
                 <li>{this.renderLocationItem(position)}</li>
             </If>
         );
+        let features = 0;
+        if(defined(terria.pickedFeatures))
+            features = terria.pickedFeatures.features.length;
+//{ !== 0 ? "-" + terria.pickedFeatures.features.length : ""}
 
         return (
             <div
@@ -225,7 +229,7 @@ const FeatureInfoPanel = createReactClass({
                 aria-hidden={!viewState.featureInfoPanelIsVisible}>
                 {!this.props.printView && <div className={Styles.header}>
                     <button type='button' onClick={ this.toggleCollapsed } className={Styles.btnPanelHeading}>
-                        Feature Information -
+                        Feature Information { features !== 0 ? "(" + features + ")": ""}
                     </button>
                     <button type='button' onClick={ this.close } className={Styles.btnCloseFeature}
                             title="Close data panel">
