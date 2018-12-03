@@ -175,6 +175,10 @@ const InformationPreview = createReactClass({
                     }
                 }
             }
+
+            if (this.props.previewed === "id") {
+                infoList.push("http://10.170.138.201:9200/rest/getResult?id=" + String(info));
+            }
         }
 
         return infoList;
