@@ -269,7 +269,7 @@ const FormWindow = createReactClass({
 
                             <label><b> Date </b>
                                 <input className={Styles.field}
-                                       type="text"
+                                       type="date"
                                        value={this.state.dateValue}
                                        onChange={this.handleChange}
                                        name="dateValue"

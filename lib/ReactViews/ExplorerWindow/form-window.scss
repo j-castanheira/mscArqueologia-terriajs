@@ -113,11 +113,10 @@
   background: $color-secondary;
   color: $modal-bg;
   height: 90%;
-  border-radius: 0px;
   top: 0px;
   padding: 18px;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0px 0px 20px 20px;
 }
 
 .footer{
