@@ -252,11 +252,8 @@ const InformationPreview = createReactClass({
     },
 
     getModel() {
-        var url = String(this.state.images[0]);
-        var id = url.split('/');
-        var l = id.length;
-        console.log("MODEL", id[l - 1]);
-        return id[l - 1];
+        var url = this.state.images[0];
+        return url;
     },
 
     componentDidMount() {

@@ -78,7 +78,7 @@ const ExploreTab = createReactClass({
         return (
             <div className={Styles.root}>
                 <div className={Styles.tableft}>
-                    <SketchComp urlid="555575d8442342d4bd2f5f79c89b8a40"
+                    <SketchComp urlid="https://sketchfab.com/models/555575d8442342d4bd2f5f79c89b8a40"
                                 handler={this.changeAnot} select={this.selectAnot}/>
                 </div>
                 <div className={this.state.currentAnot === null ? Styles.tabright2 : Styles.tabright}>
