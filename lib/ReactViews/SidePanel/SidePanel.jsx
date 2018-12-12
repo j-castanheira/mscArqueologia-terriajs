@@ -76,6 +76,15 @@ const SidePanel = createReactClass({
     render() {
         const searchState = this.props.viewState.searchState;
 
+        const orStyle = {
+            color: 'white',
+            textAlign: 'center',
+            verticalAlign: 'middle',
+            fontSize: '10px',
+            height: '10%',
+            margin: '4px'
+        };
+
         return (
             <div className={Styles.workBench}>
                 <div className={Styles.header}>
@@ -90,9 +99,10 @@ const SidePanel = createReactClass({
                                onFocus={this.startLocationSearch}
                                searchText={searchState.locationSearchText}
                                placeholder="Search for locations/objects" />
+                    <div style={orStyle}>OR</div>
                     <div className={Styles.addData}>
                         <button type='button' onClick={this.onAddDataClicked} className={Styles.button}>
-                            <Icon glyph={Icon.GLYPHS.add}/>Add data
+                            <Icon glyph={Icon.GLYPHS.add}/>Advanced Search
                         </button>
                     </div>
                 </div>

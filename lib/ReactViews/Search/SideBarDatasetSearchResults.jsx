@@ -33,6 +33,15 @@ const SideBarDatasetSearchResults = createReactClass({
         this.props.viewState.searchInCatalog(this.props.viewState.searchState.locationSearchText);
     },
 
+    searchInRepository() {
+        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,1);
+    },
+
+
+    searchInPersonal() {
+        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,3);
+    },
+
     toggleGroup() {
         this.setState({
             isOpen: !this.state.isOpen
@@ -47,10 +56,14 @@ const SideBarDatasetSearchResults = createReactClass({
                         <Icon glyph={this.state.isOpen ? Icon.GLYPHS.opened : Icon.GLYPHS.closed}/>
                     </button>
                     <ul className={Styles.items}>
-                      <SearchResult clickAction={this.searchInDataCatalog}
-                                    icon='data'
-                                    name={`Search for "${this.props.viewState.searchState.locationSearchText}" in the Data Catalogue`}
-                      />
+                        <SearchResult clickAction={this.searchInRepository}
+                                      icon='data'
+                                      name={`Search for "${this.props.viewState.searchState.locationSearchText}" in cultural object repositories`}
+                        />
+                        <SearchResult clickAction={this.searchInPersonal}
+                                      icon='data'
+                                      name={`Search for "${this.props.viewState.searchState.locationSearchText}" in the personal database of submitted objects`}
+                        />
                     </ul>
                 </div>);
     },

@@ -34,6 +34,11 @@ $workbench-margin: $padding-small;
   }
 }
 
+.text {
+  font-size: $font-size-mini;
+  position: relative;
+  width: 80%;
+}
 .header {
   composes: list-reset from '../../Sass/common/_base.scss';
   width: 100%;
