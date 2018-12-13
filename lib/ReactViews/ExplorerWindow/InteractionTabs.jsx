@@ -56,7 +56,7 @@ const InteractionTabs = createReactClass({
                 />
             };
 
-            return [exploreTab,infoTab];
+            return [infoTab,exploreTab];
     },
 
     activateTab(tab) {
