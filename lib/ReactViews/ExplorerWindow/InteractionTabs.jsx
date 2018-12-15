@@ -36,7 +36,7 @@ const InteractionTabs = createReactClass({
             name: 'Explore',
             title: 'explore',
             category: 'explore',
-            tab: 0,
+            tab: 1,
             icon: Icon.GLYPHS.sphere,
             panel: <ExploreTab terria={this.props.terria}
                                 viewState={this.props.viewState}
@@ -48,7 +48,7 @@ const InteractionTabs = createReactClass({
                 name: 'Information',
                 title: 'information',
                 category: 'information',
-                tab: 1,
+                tab: 0,
                 icon: Icon.GLYPHS.text,
                 panel: <InformationTab terria={this.props.terria}
                                        viewState={this.props.viewState}
