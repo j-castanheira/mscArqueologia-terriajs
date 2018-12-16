@@ -113,47 +113,9 @@ const ExploreTab = createReactClass({
                             <p>{this.state.description}</p>
                         </div>
                     ) : ""}
-                    {this.state.currentAnot === 0 ? (
-                        <div id="annotation-entrance"
-                             className={this.state.currentAnot === 0 ? Styles.slideactive : Styles.slide}>
-                            <YouTube
-                                videoId={videoIds[this.state.currentAnot]}
-                                opts={opts}
-                            />
-                            <SlideshowComp images={this.state.images[this.state.currentAnot]}/>
-                        </div>) : ""}
-                    {this.state.currentAnot === 1 ? (
-                        <div id="annotation-passage"
-                             className={this.state.currentAnot === 1 ? Styles.slideactive : Styles.slide}>
-                            <YouTube
-                                videoId={videoIds[this.state.currentAnot]}
-                                opts={opts}
-                            />
-                            <SlideshowComp images={this.state.images[this.state.currentAnot]}/>
-                        </div>) : ""}
-
-                    {this.state.currentAnot === 2 ? (
-                        <div id="annotation-kerbstone52"
-                             className={this.state.currentAnot === 2 ? Styles.slideactive : Styles.slide}>
-                            <YouTube
-                                videoId={videoIds[this.state.currentAnot]}
-                                opts={opts}
-                            />
-                            <SlideshowComp images={this.state.images[this.state.currentAnot]}/>
-                        </div>) : ""}
-
-                    {this.state.currentAnot === 3 ? (
-                        <div id="annotation-kerbstone67"
-                             className={this.state.currentAnot === 3 ? Styles.slideactive : Styles.slide}>
-                            <YouTube
-                                videoId={videoIds[this.state.currentAnot]}
-                                opts={opts}
-                            />
-                            <SlideshowComp images={this.state.images[this.state.currentAnot]}/>
-                        </div>) : ""}
-                    {this.state.currentAnot === 4 ? (
-                        <div id="annotation-otrosthat"
-                             className={this.state.currentAnot === 4 ? Styles.slideactive : Styles.slide}>
+                    {this.state.currentAnot !== null ? (
+                        <div id={"annotation-" + this.state.currentAnot}
+                             className={Styles.slideactive}>
                             <YouTube
                                 videoId={videoIds[this.state.currentAnot]}
                                 opts={opts}
