@@ -53,14 +53,25 @@ const FeatureInfoSection = createReactClass({
     {
         let items = this.props.catalogItem.json;
         let id = this.props.feature.properties._Id._value;
-        //console.log("JSON",items[id]);
-        //console.log(this.props.viewState.terria);
+        //console.log(this.props.feature.properties);
+        let name = this.props.feature.properties._Title._value;
         var func = new repositoryId(this.props.viewState.terria);
         //this.props.viewState.viewCatalogMember(func);
-       //items[id].relationsByFields;
-        //var promise = func.invoke();
+        let rels =  items[id].relationsByFields;
+        //console.log(rels);
+        let relUrl = 'http://10.170.138.201:9200/rest/getResult?id=';
+        for (var relation in rels) {
+            relUrl += rels[relation].targetResultId + ',';
+        }
+        relUrl = relUrl.slice(0, -1);
+        //console.log('URL',relUrl);
+        func.url = relUrl;
+        func.name = "Related to " + name + " in " +this.props.catalogItem.name;
+
+        var promise = func.invoke();
 
         //DESLIGAR INFOSECTION
+        /**
         try {
             const promise = when(func.invoke())
                 .otherwise(terriaError => {
@@ -73,7 +84,8 @@ const FeatureInfoSection = createReactClass({
                 console.log("ERROR")
             }
             return undefined;
-        }
+        }**/
+
     },
 
     openInteractionWindow()
