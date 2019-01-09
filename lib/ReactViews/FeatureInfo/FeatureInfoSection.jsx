@@ -234,63 +234,85 @@ const FeatureInfoSection = createReactClass({
 
     getIcon()
     {
-        let icon,type;
-        const typeTry = this.props.feature._properties._Type;
-        if(typeTry !== undefined)
-        type = typeTry._value;
-        console.log("FEATURE",this.props.feature);
-        switch (type) {
-            case 'IMAGE': icon = Icon.GLYPHS.image;
-                break;
+        let icon,type,typeTry;
+        const propTry = this.props.feature._properties;
+        if(defined(propTry))
+        {
+            typeTry = this.props.feature._properties._Type;
+        }
+        if(defined(typeTry)) {
+            type = typeTry._value;
+            console.log("FEATURE", this.props.feature);
+            switch (type) {
+                case 'IMAGE':
+                    icon = Icon.GLYPHS.image;
+                    break;
 
-            case 'TEXT': icon = Icon.GLYPHS.text;
-                break;
+                case 'TEXT':
+                    icon = Icon.GLYPHS.text;
+                    break;
 
-            case 'VIDEO': icon = Icon.GLYPHS.video;
-                break;
+                case 'VIDEO':
+                    icon = Icon.GLYPHS.video;
+                    break;
 
-            case '3D': icon = Icon.GLYPHS.model;
-                break;
+                case '3D':
+                    icon = Icon.GLYPHS.model;
+                    break;
 
-            case 'OTHER': icon = Icon.GLYPHS.radioOff;
-                break;
+                case 'OTHER':
+                    icon = Icon.GLYPHS.radioOff;
+                    break;
 
+            }
         }
         return icon;
     },
 
-    getColor()
-    {
+    getColor() {
         let color;
         const billboard = this.props.feature.billboard;
         const point = this.props.feature.point;
 
-        if(point !== undefined)
-        {
-          color = point._color._value;
-        }
+        if (defined(point)) {
+            if (point !== undefined) {
+                color = point._color._value;
+            }
 
-        if(billboard !== undefined)
-        {
-            color = billboard._color._value;
+            if (billboard !== undefined) {
+                color = billboard._color._value;
+            }
         }
-
         return color;
     },
 
 
     hasRelated()
     {
-        let items = this.props.catalogItem.json;
-        let id = this.props.feature.properties._Id._value;
-        return defined(items[id].relationsByFields);
+        let items, id;
+        let result = false;
+        if(defined(this.props.feature.properties)) {
+            items = this.props.catalogItem.json;
+            if(defined(this.props.feature.properties._Id)) {
+                id = this.props.feature.properties._Id._value;
+                result = defined(items[id].relationsByFields);
+            }
+        }
+        return result;
     },
 
     hasResources()
     {
-        let items = this.props.catalogItem.json;
-        let id = this.props.feature.properties._Id._value;
-        return defined(items[id].resources);
+        let items, id;
+        let result = false;
+        if(defined(this.props.feature.properties)) {
+            items = this.props.catalogItem.json;
+            if(defined(this.props.feature.properties._Id)) {
+                id = this.props.feature.properties._Id._value;
+                result = defined(items[id].resources);
+            }
+        }
+        return result;
     },
 
     render() {
@@ -314,15 +336,17 @@ const FeatureInfoSection = createReactClass({
         const color = this.getColor();
         const hasRelated = this.hasRelated();
         const hasResources = this.hasResources();
-        const styles = {
-            width: '100%',
-            height: '5px',
-            backgroundColor: 'rgb(' + String(color['red']*255) + ',' + String(color['green']*255) + ',' + String(color['blue']*255) + ')',
+        let styles;
+        if (defined(color)) {
+            styles = {
+                width: '100%',
+                height: '5px',
+                backgroundColor: 'rgb(' + String(color['red'] * 255) + ',' + String(color['green'] * 255) + ',' + String(color['blue'] * 255) + ')',
+            };
         };
-
         return (
             <li className={classNames(Styles.section)}>
-                <div className="color-box" style={styles}></div>
+                {color !== undefined ? <div className="color-box" style={styles}></div> :""}
                 <If condition={this.props.printView}>
                     <h2>{fullName}</h2>
                 </If>

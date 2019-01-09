@@ -34,12 +34,11 @@ const SideBarDatasetSearchResults = createReactClass({
     },
 
     searchInRepository() {
-        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,1);
+        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,0);
     },
 
-
     searchInPersonal() {
-        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,3);
+        this.props.viewState.searchInRepository(this.props.viewState.searchState.locationSearchText,2);
     },
 
     toggleGroup() {

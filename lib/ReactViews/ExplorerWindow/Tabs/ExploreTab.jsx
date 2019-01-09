@@ -43,6 +43,7 @@ const ExploreTab = createReactClass({
         // Get the video resources from the objects
         let newVidId = this.state.videoIds;
         this.state.videoIds.forEach(function getUrls(video,cnt) {
+            console.log("VIDEO",video);
              loadJson(video).then(function (jsonData) {
                 var url = jsonData.result.resources[1].url;
                 var id = url.split('=');
@@ -51,25 +52,69 @@ const ExploreTab = createReactClass({
                 console.log("ERROR");
             });
         });
-
+        console.log("videos",newVidId);
         this.setState({videoIds: newVidId});
 
         // Get the image resources from the objects
+        let foundImgs = false;
         let newImgs = this.state.images;
         this.state.images.forEach(function getUrls(img,cnt) {
+            console.log("IMG",img);
             loadJson(img).then(function (jsonData) {
                 let allImgs = [];
                 let resources = jsonData.result.resources.slice(1).map(image => image.url);
                 for (let resource in resources) {
+                    console.log("RESOURCE",resource);
                     allImgs.push(resources[resource]);
                 }
                 newImgs.splice(cnt,1,allImgs);
+                foundImgs = true;
             }).otherwise(function (error) {
                 console.log("ERROR");
             });
         });
+        console.log("IMAGES",newImgs);
+        console.log("FOUND", foundImgs);
         this.setState({images: newImgs});
+    },
 
+    componentDidMount() {
+        // Get the video resources from the objects
+        let newVidId = this.state.videoIds;
+        this.state.videoIds.forEach(function getUrls(video,cnt) {
+            console.log("VIDEO",video);
+            loadJson(video).then(function (jsonData) {
+                var url = jsonData.result.resources[1].url;
+                var id = url.split('=');
+                newVidId.splice(cnt,1,id[1]);
+            }).otherwise(function (error) {
+                console.log("ERROR");
+            });
+        });
+        console.log("videos",newVidId);
+        this.setState({videoIds: newVidId});
+
+        // Get the image resources from the objects
+        let foundImgs = false;
+        let newImgs = this.state.images;
+        this.state.images.forEach(function getUrls(img,cnt) {
+            console.log("IMG",img);
+            loadJson(img).then(function (jsonData) {
+                let allImgs = [];
+                let resources = jsonData.result.resources.slice(1).map(image => image.url);
+                for (let resource in resources) {
+                    console.log("RESOURCE",resource);
+                    allImgs.push(resources[resource]);
+                }
+                newImgs.splice(cnt,1,allImgs);
+                foundImgs = true;
+            }).otherwise(function (error) {
+                console.log("ERROR");
+            });
+        });
+        console.log("IMAGES",newImgs);
+        console.log("FOUND", foundImgs);
+        this.setState({images: newImgs});
     },
 
     changeAnot(index) {
